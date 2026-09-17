@@ -1,0 +1,48 @@
+{
+  "name": "dove-youth-development",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1",
+    "build": "next build",
+    "start": "next start --hostname 127.0.0.1",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "verify": "node scripts/verify-home.mjs",
+    "verify:sponsorship": "node scripts/verify-child-sponsorship.mjs",
+    "verify:vocational": "node scripts/verify-vocational-training.mjs",
+    "verify:donate": "node scripts/verify-donate.mjs",
+    "verify:what-we-do": "node scripts/verify-what-we-do.mjs",
+    "verify:volunteer": "node scripts/verify-volunteer.mjs",
+    "verify:travel": "node scripts/verify-travel-with-purpose.mjs",
+    "verify:partnerships": "node scripts/verify-partnerships.mjs",
+    "test:cms": "tsx --test tests/cms-blocks.test.ts tests/cms-services.test.ts tests/wix-importer.test.ts",
+    "migrate:wix:dry-run": "tsx scripts/migrate-wix-blog.ts",
+    "migrate:wix:live:dry-run": "tsx scripts/migrate-wix-blog.ts --live"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "^5.2.8",
+    "@fontsource-variable/playfair-display": "^5.2.8",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.109.0",
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "16.3.5",
+    "pg": "^8.23.0",
+    "tsx": "^4.23.13",
+    "typescript": "^5.9.0"
+  }
+}

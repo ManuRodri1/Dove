@@ -1,0 +1,100 @@
+import type { vocationalTrainingEn } from "./vocational-training.en";
+
+export const vocationalTrainingEs: typeof vocationalTrainingEn = {
+  seo: {
+    title: "Centro de Formación Vocacional | Dove Youth Development",
+    description: "Conoce cómo el Centro de Formación Vocacional de Dove Youth Development ayuda a jóvenes de Puerto Plata a desarrollar habilidades prácticas, prepararse para el trabajo y explorar caminos hacia el empleo, el emprendimiento o la continuación de sus estudios.",
+  },
+  hero: {
+    eyebrow: "Centro de Formación Vocacional",
+    heading: "Habilidades para hoy. Oportunidades para el mañana.",
+    description: "El Centro de Formación Vocacional de Dove ayuda a los jóvenes a desarrollar habilidades prácticas, prepararse para el mundo laboral y explorar caminos hacia el empleo, el emprendimiento o la continuación de sus estudios.",
+    primary: "Apoya la formación vocacional",
+    secondary: "Conoce los programas",
+    imageAlt: "Dos jóvenes trabajan juntas en una computadora portátil en Dove, Puerto Plata",
+    caption: "Aprendizaje práctico, preparación y nuevas posibilidades",
+    location: "Puerto Plata, República Dominicana",
+  },
+  why: {
+    heading: "Cuando la educación se encuentra con el próximo paso.",
+    introduction: "A medida que los estudiantes de Dove crecen, las preguntas cambian. El Centro de Formación Vocacional nació para acompañar a los jóvenes en la transición hacia la vida adulta con aprendizaje práctico y apoyo constante.",
+    questions: ["¿Cómo me preparo para trabajar?", "¿Qué habilidades puedo desarrollar?", "¿Puedo continuar mis estudios?", "¿Puedo crear algo propio?"],
+    answer: "El Centro conecta la educación y los vínculos que los jóvenes ya conocen en Dove con la preparación para lo que puede venir después.",
+  },
+  pathways: {
+    heading: "Desarrolla habilidades. Explora posibilidades.",
+    description: "Cuatro áreas conectadas crean espacios para aprender, practicar y prepararse. La Preparación para el Empleo acompaña las rutas técnicas como una base común.",
+    programs: [
+      { number: "01", title: "Preparación para el Empleo", label: "Base que conecta", description: "Preparación para el entorno laboral, práctica de solicitudes y entrevistas, habilidades de empleabilidad y orientación para dar el paso hacia el trabajo.", details: ["Preparación de solicitudes y entrevistas", "Habilidades de empleabilidad y hábitos laborales", "Orientación y acercamiento a entornos profesionales"] },
+      { number: "02", title: "Inglés como Segundo Idioma", label: "Comunicación", description: "Desarrollo del idioma para ampliar las posibilidades de comunicación y empleo." },
+      { number: "03", title: "Habilidades Informáticas", label: "Aprendizaje digital", description: "Experiencia práctica con computadoras y habilidades digitales útiles para estudiar y trabajar." },
+      { number: "04", title: "Cosmetología", label: "Práctica vocacional", description: "Aprendizaje práctico vinculado con habilidades reales y posibles oportunidades de generar ingresos." },
+    ],
+    imageAlt: "Un grupo de jóvenes y adultos reunido en un aula de Dove",
+    archive: "Imagen del programa tomada del archivo público de Dove",
+  },
+  readiness: {
+    heading: "Más que habilidades técnicas.",
+    description: "Formarse también significa aprender a llegar a un lugar de trabajo con preparación y confianza. La Preparación para el Empleo conecta cada ruta vocacional con los pasos prácticos para buscar e iniciar un trabajo.",
+    points: ["Preparar solicitudes y entrevistas", "Desarrollar hábitos y habilidades para el trabajo", "Aprender mediante orientación y acercamiento profesional"],
+  },
+  outcomes: {
+    heading: "Habilidades distintas. Futuros diferentes.",
+    description: "La formación puede abrir más de un camino posible. Dove acompaña a los jóvenes para que exploren opciones acordes con sus intereses, su preparación y sus próximos pasos.",
+    paths: [
+      { title: "Empleo", description: "Preparación para buscar e iniciar un trabajo." },
+      { title: "Emprendimiento", description: "Habilidades que pueden apoyar la creación de un pequeño negocio o servicio independiente." },
+      { title: "Continuación de Estudios", description: "Una base más sólida para seguir estudiando y formándose profesionalmente." },
+    ],
+    evidenceHeading: "Ya comienzan a tomar forma caminos diferentes.",
+    evidenceDescription: "A lo largo de la historia de los programas de Dove, antiguos participantes han seguido distintas rutas de trabajo, estudio y emprendimiento. Estos ejemplos reflejan trayectorias individuales, no resultados garantizados.",
+    examples: ["Empleo en puertos de cruceros", "Estudios de enfermería e ingeniería", "Béisbol profesional", "Pequeños negocios propios"],
+  },
+  jodelka: {
+    heading: "De Dove al mundo laboral",
+    description: "Jodelka y Elian participaron en los programas de Dove, desarrollaron su inglés, se graduaron de la secundaria y luego consiguieron empleo en Amber Cove. Su historia refleja el camino más amplio de Dove: del aprendizaje y los vínculos hacia nuevas oportunidades en la vida adulta.",
+    quote: "Dove me mostró que podía hacer más de lo que imaginaba.",
+    attribution: "Jodelka · participante de Dove",
+    note: "Una trayectoria personal, no la promesa de un resultado específico para cada estudiante.",
+  },
+  origin: {
+    eyebrow: "Un nuevo capítulo",
+    heading: "Construyendo el próximo paso en el camino de Dove.",
+    description: "Dove comenzó acompañando a niños a través de la educación y la comunidad. A medida que los estudiantes llegaron a la adolescencia, la visión se amplió para incluir la formación vocacional y la Preparación para el Empleo. El Centro abrió en 2022 como un paso importante en ese recorrido.",
+    link: "Lee Nuestra Historia",
+    imageAlt: "Jóvenes, personal y visitantes reunidos frente al Centro de Desarrollo Juvenil de Dove",
+    archive: "Centro de Desarrollo Juvenil de Dove · imagen del archivo del programa",
+  },
+  support: {
+    heading: "Ayuda a sostener el próximo paso.",
+    description: "Los aportes a la campaña dedicada de Formación Vocacional de Dove ayudan a sostener los docentes, los suministros y los materiales de aula del Centro.",
+    categories: ["Salarios de docentes", "Suministros", "Materiales de aula"],
+    primary: "Apoya la formación vocacional",
+    partnerHeading: "Los programas necesitan aliados de la comunidad.",
+    partnerDescription: "Empresas y organizaciones comunitarias pueden ayudar a crear acercamiento profesional, aprendizaje y conexiones con nuevas oportunidades.",
+    partner: "Colabora con Dove",
+  },
+  founder: {
+    heading: "Una nota de Liz Rooney",
+    description: "Liz Rooney, fundadora y directora ejecutiva, ha descrito el Centro como una parte importante del acompañamiento a los adolescentes mientras se preparan para la vida adulta. También ha reconocido la generosidad y el compromiso constante de quienes apoyan a Dove y ayudan a convertir esta visión en realidad.",
+    imageAlt: "Liz Rooney, fundadora de Dove, durante una actividad comunitaria",
+  },
+  faq: {
+    heading: "Preguntas sobre la formación vocacional",
+    items: [
+      { question: "¿Qué programas ofrece el Centro de Formación Vocacional?", answer: "Las áreas actuales de Dove incluyen Preparación para el Empleo, Inglés como Segundo Idioma, Habilidades Informáticas y Cosmetología." },
+      { question: "¿Para quién está dirigido el Centro de Formación Vocacional?", answer: "El Centro está diseñado para ayudar a los jóvenes de Dove a desarrollar habilidades y prepararse para los próximos pasos hacia la vida adulta y el trabajo." },
+      { question: "¿Qué pueden hacer los estudiantes después de formarse?", answer: "Dove describe caminos posibles hacia el empleo, el emprendimiento y la continuación de estudios. Son posibilidades, no resultados garantizados." },
+      { question: "¿Cómo puedo apoyar al Centro de Formación Vocacional?", answer: "Las donaciones se realizan en la página externa dedicada de Network for Good / Bonterra de Dove." },
+      { question: "¿Este sitio web procesa la donación?", answer: "No. La información de pago es gestionada por la plataforma externa de donaciones." },
+      { question: "¿Las empresas pueden apoyar el programa?", answer: "Sí. Dove recibe con interés conversaciones con empresas y organizaciones que puedan generar acercamiento profesional, aprendizaje y nuevas oportunidades." },
+    ],
+  },
+  final: {
+    eyebrow: "Apoya lo que viene",
+    heading: "Ayuda a convertir habilidades en oportunidades.",
+    description: "Tu apoyo ayuda a Dove a sostener los docentes, los materiales y las oportunidades de aprendizaje que hacen posible el Centro de Formación Vocacional.",
+    primary: "Apoya la formación vocacional",
+    secondary: "Colabora con Dove",
+  },
+};

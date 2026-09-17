@@ -1,0 +1,201 @@
+{
+  "posts": [
+    {
+      "id": "wix-post-001",
+      "title": "April 2024 Community & Program Update",
+      "slug": "april-2024-community-update",
+      "excerpt": "A look at what happened in Puerto Plata this spring with our students, vocational programs, and community.",
+      "firstPublishedDate": "2024-04-15T14:30:00.000Z",
+      "lastPublishedDate": "2024-04-16T10:00:00.000Z",
+      "featured": true,
+      "pinned": false,
+      "author": {
+        "id": "author-wix-01",
+        "name": "Dove Youth Development Team"
+      },
+      "categoryIds": ["cat-community", "cat-programs"],
+      "tagIds": ["tag-puerto-plata", "tag-vocational", "tag-students"],
+      "coverMedia": {
+        "image": {
+          "url": "https://static.wixstatic.com/media/d88784_44242d83e5054c4b8c70b72f04061da1~mv2.jpg",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      "richContent": {
+        "nodes": [
+          {
+            "type": "HEADING",
+            "headingData": { "level": 2 },
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": { "text": "Spring Growth in Puerto Plata" }
+              }
+            ]
+          },
+          {
+            "type": "PARAGRAPH",
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": {
+                  "text": "Over the past three months, students at the Youth Center have been advancing through our English and computer skills tracks."
+                }
+              }
+            ]
+          },
+          {
+            "type": "IMAGE",
+            "imageData": {
+              "image": {
+                "src": { "url": "https://static.wixstatic.com/media/d88784_d7cfee1200f24009b3bc3a46f30c5fec~mv2.jpg" },
+                "width": 1000,
+                "height": 667
+              },
+              "altText": "Young women working together on laptops at Dove",
+              "caption": "Students in the computer lab"
+            }
+          },
+          {
+            "type": "BLOCKQUOTE",
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": {
+                  "text": "When you give young people a safe environment and real skills, they rise to every opportunity."
+                }
+              }
+            ]
+          },
+          {
+            "type": "VIDEO",
+            "videoData": {
+              "video": {
+                "src": { "url": "https://www.youtube.com/watch?v=rjFUSW-1xmA" },
+                "title": "Dove Youth Development Overview"
+              },
+              "caption": "Watch our 2024 overview"
+            }
+          },
+          {
+            "type": "DIVIDER",
+            "dividerData": { "lineStyle": "SOLID" }
+          },
+          {
+            "type": "PARAGRAPH",
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": {
+                  "text": "Thank you to every volunteer, sponsor, and partner who makes this possible."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "seo": {
+        "title": "April 2024 Community Update | Dove Youth Development",
+        "description": "Read our latest news and updates from Puerto Plata, Dominican Republic."
+      }
+    },
+    {
+      "id": "wix-post-002",
+      "title": "Meet Leonela: From Student to Entrepreneur",
+      "slug": "meet-leonela-student-entrepreneur",
+      "excerpt": "How Leonela discovered her passion and built her business in Puerto Plata with support from Dove.",
+      "firstPublishedDate": "2023-11-10T12:00:00.000Z",
+      "lastPublishedDate": "2023-11-10T12:00:00.000Z",
+      "featured": true,
+      "pinned": true,
+      "author": {
+        "id": "author-wix-02",
+        "name": "Liz & The Dove Team"
+      },
+      "categoryIds": ["cat-stories-of-change"],
+      "tagIds": ["tag-leonela", "tag-entrepreneurship", "tag-alumni"],
+      "coverMedia": {
+        "image": {
+          "url": "https://static.wixstatic.com/media/d88784_f8c3172be1074bfb8d851ab7451d9dfe~mv2.jpg",
+          "width": 1200,
+          "height": 800
+        }
+      },
+      "richContent": {
+        "nodes": [
+          {
+            "type": "HEADING",
+            "headingData": { "level": 2 },
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": { "text": "A Journey of Persistence and Passion" }
+              }
+            ]
+          },
+          {
+            "type": "PARAGRAPH",
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": {
+                  "text": "Leonela joined Dove programs as a young girl in Puerto Plata. Through years of mentorship, education, and vocational support, she developed both her creative and business talents."
+                }
+              }
+            ]
+          },
+          {
+            "type": "GALLERY",
+            "galleryData": {
+              "items": [
+                {
+                  "image": {
+                    "src": { "url": "https://static.wixstatic.com/media/d88784_d9e2faf456d6418eab1ecf21ea2390d2~mv2.jpg" },
+                    "altText": "Leonela working on her craft",
+                    "caption": "Hands-on vocational work"
+                  }
+                },
+                {
+                  "image": {
+                    "src": { "url": "https://static.wixstatic.com/media/d88784_985bc8e5e2e14354bcad30400568cc04~mv2.jpg" },
+                    "altText": "Community showcase in Puerto Plata",
+                    "caption": "Sharing with the community"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "PARAGRAPH",
+            "nodes": [
+              {
+                "type": "TEXT",
+                "textData": {
+                  "text": "Today, Leonela runs her own business and serves as an inspiring mentor for the younger girls following in her footsteps."
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "seo": {
+        "title": "Meet Leonela: Student to Entrepreneur | Dove Youth Development",
+        "description": "Discover Leonela's story of transformation through Dove Youth Development in Puerto Plata."
+      }
+    }
+  ],
+  "categories": [
+    { "id": "cat-community", "name": "Community", "slug": "community" },
+    { "id": "cat-programs", "name": "Programs", "slug": "programs" },
+    { "id": "cat-stories-of-change", "name": "Stories of Change", "slug": "stories-of-change" }
+  ],
+  "tags": [
+    { "id": "tag-puerto-plata", "name": "Puerto Plata", "slug": "puerto-plata" },
+    { "id": "tag-vocational", "name": "Vocational Training", "slug": "vocational-training" },
+    { "id": "tag-students", "name": "Students", "slug": "students" },
+    { "id": "tag-leonela", "name": "Leonela", "slug": "leonela" },
+    { "id": "tag-entrepreneurship", "name": "Entrepreneurship", "slug": "entrepreneurship" },
+    { "id": "tag-alumni", "name": "Alumni", "slug": "alumni" }
+  ]
+}

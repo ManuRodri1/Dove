@@ -1,0 +1,81 @@
+export const sponsorshipEn = {
+  seo: {
+    title: "Child Sponsorship | Dove Youth Development",
+    description: "Sponsor a child through Dove Youth Development and help support education, skills development, family food assistance and opportunities for young people in Puerto Plata.",
+  },
+  hero: {
+    eyebrow: "Child sponsorship",
+    heading: "Sponsor a Child. Help Create More Possibilities.",
+    description: "For $50 a month, child sponsorship helps support a young person’s participation in Dove’s programs and the resources that help children and families grow alongside the Dove community.",
+    primary: "Sponsor a Child — $50/month",
+    secondary: "See what sponsorship supports",
+    imageAlt: "Two boys smiling together outdoors at Dove in Puerto Plata",
+  },
+  anchor: {
+    amount: "$50",
+    period: "per month",
+    heading: "One sponsorship. Many parts of a young person’s journey.",
+    description: "Your recurring support joins the wider work of Dove: learning, practical skills, daily support and community experiences for children ages 6–18.",
+    cta: "Begin Child Sponsorship",
+    note: "Monthly or annual recurring payment options are available on Dove’s secure external giving page.",
+  },
+  support: {
+    eyebrow: "The program around each child",
+    heading: "What Your Sponsorship Helps Support",
+    description: "Sponsorship helps children participate in Dove’s programs while contributing to practical resources for participating families.",
+    imageAlt: "A child greeting a visitor during a community activity at Dove",
+    groups: [
+      { label: "Learning & education", introduction: "Support for learning today and the foundations children carry forward.", items: ["Educational support", "Primary school classes", "English classes", "Computer studies"] },
+      { label: "Skills for the future", introduction: "Practical preparation as young people begin to look toward adulthood.", items: ["Job readiness", "Cosmetology and vocational learning"] },
+      { label: "Daily support", introduction: "Everyday nourishment and food assistance shared with participating families.", items: ["Daily snacks", "Monthly food bags for participating families"] },
+      { label: "School & community experiences", introduction: "Resources and activities that help children take part throughout the year.", items: ["Annual school uniforms", "School supplies", "Educational summer activities"] },
+    ],
+  },
+  process: {
+    eyebrow: "A clear, secure path",
+    heading: "How Sponsorship Works",
+    steps: [
+      { number: "01", title: "Choose to sponsor", text: "Start through Dove’s secure external giving page." },
+      { number: "02", title: "Your support joins the program", text: "Your recurring sponsorship helps support participation in Dove programming and family food assistance." },
+      { number: "03", title: "Stay connected", text: "Sponsors receive updates through Dove, including program communication and access to the sponsor community." },
+    ],
+    cta: "Sponsor a Child",
+  },
+  connection: {
+    eyebrow: "Connection & transparency",
+    heading: "Stay Connected to the Dove Community",
+    description: "Sponsorship includes simple ways to stay informed about Dove’s work and the wider program community.",
+    items: ["Invitation to Dove’s private sponsor Facebook group", "Dove Newsletter and program updates", "U.S. tax receipt"],
+  },
+  voices: {
+    eyebrow: "Voices from Dove",
+    heading: "What Children Value at Dove",
+    description: "These short statements come from the children featured on Dove’s public Child Sponsorship page. Ages and other personal details are intentionally omitted here.",
+    testimonials: [
+      { name: "Yarleni", statement: "I love arts and crafts at Dove." },
+      { name: "Carlos", statement: "I enjoy playing basketball." },
+      { name: "Darianny", statement: "We share memories and meet new people." },
+      { name: "Chrismason", statement: "I like playing with my friends." },
+    ],
+  },
+  faq: {
+    eyebrow: "Good to know",
+    heading: "Child Sponsorship FAQ",
+    items: [
+      { question: "How much does it cost to sponsor a child?", answer: "$50 USD per month is Dove’s current standard child sponsorship amount." },
+      { question: "Can I pay annually?", answer: "Yes. The giving platform supports monthly or annual recurring sponsorship." },
+      { question: "What does my sponsorship support?", answer: "Dove programming and child and family support, including educational activities and family food assistance." },
+      { question: "How do I make the payment?", answer: "Payments are completed securely through Dove’s external Network for Good / Bonterra giving page." },
+      { question: "Does Dove collect my card information on this website?", answer: "No. The donation and payment process takes place through the external giving platform." },
+      { question: "How can I ask a sponsorship question?", answer: "Email Dove’s Child Sponsorship team and they will help with your question." },
+    ],
+    contact: "Email the Child Sponsorship team",
+  },
+  final: {
+    eyebrow: "Begin with Dove",
+    heading: "Help Create More Possibilities.",
+    description: "A $50 monthly sponsorship helps a young person stay connected to Dove’s programs, learning and community.",
+    primary: "Sponsor a Child — $50/month",
+    secondary: "Questions about sponsorship?",
+  },
+};

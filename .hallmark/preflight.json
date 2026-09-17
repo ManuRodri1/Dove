@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-16",
+  "initialFramework": null,
+  "initialRouting": null,
+  "initialStyling": null,
+  "initialFonts": [],
+  "initialTokens": [],
+  "initialComponents": [],
+  "initialDependencies": [],
+  "initialI18n": null,
+  "initialNextImage": false,
+  "initialDesignSystem": false,
+  "originalFiles": ["DOVE_MASTER_PROJECT_CONTEXT.md", "DOVE_HOME_IMPLEMENTATION_BRIEF.md", "REPO DE IMAGENES.xlsx"],
+  "implementation": "Next.js 16.3.5 App Router, React 19.3.0, TypeScript, tokenized CSS",
+  "authority": "Approved Stitch screenshots and latest explicit user request; no theme rotation"
+}

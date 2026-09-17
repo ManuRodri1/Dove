@@ -1,0 +1,110 @@
+export const donateEn = {
+  seo: {
+    title: "Donate | Dove Youth Development",
+    description: "Support Dove Youth Development in Puerto Plata through general giving, child sponsorship, vocational training, fundraising campaigns and community partnerships.",
+  },
+  hero: {
+    eyebrow: "Give with purpose",
+    heading: "Your Support Creates Possibility.",
+    description: "Every gift helps Dove sustain education, youth development, skills training and a community where young people in Puerto Plata can learn, grow and imagine what comes next.",
+    primary: "Donate now",
+    secondary: "Explore ways to give",
+    videoTitle: "Dove Youth Development community video",
+    play: "Play background video",
+    pause: "Pause background video",
+    unavailable: "The background video is unavailable. The page content remains fully accessible.",
+  },
+  pathways: {
+    eyebrow: "Ways to give",
+    heading: "Choose How You Want to Help.",
+    description: "Each path leads to the correct Dove giving destination. Payment is completed securely on Network for Good / Bonterra.",
+    options: {
+      general: {
+        label: "General giving",
+        title: "Give Where It’s Needed Most.",
+        description: "Support Dove’s educational and developmental work and help the organization respond to current program and community needs.",
+        cta: "Donate now",
+      },
+      childSponsorship: {
+        label: "$50 / month",
+        title: "Sponsor a Child",
+        description: "Support a child’s participation in Dove programming and family food assistance through the dedicated sponsorship program.",
+        cta: "Sponsor a child",
+      },
+      vocationalTraining: {
+        label: "Skills for the future",
+        title: "Support Vocational Training",
+        description: "Help sustain the teachers, supplies and classroom materials behind Dove’s Vocational Training Center.",
+        cta: "Support vocational training",
+      },
+      partnership: {
+        label: "Organizations & institutions",
+        title: "Corporate & Community Partnerships",
+        description: "Businesses, foundations, schools and community organizations can build longer-term support with Dove.",
+        cta: "Partner with Dove",
+      },
+    },
+  },
+  impact: {
+    heading: "What Your Gift Helps Support.",
+    description: "Giving strengthens the connected parts of Dove’s work without promising a fixed allocation or guaranteed outcome.",
+    areas: [
+      { title: "Education & Youth Development", description: "Learning opportunities, educational programming and youth-development activities." },
+      { title: "Skills & Vocational Training", description: "Training, teachers, classroom materials and practical skills development." },
+      { title: "Family & Community Support", description: "Programs and support that extend beyond classroom learning and keep Dove connected to families." },
+      { title: "Safe Community & Positive Experiences", description: "A place for young people to learn, grow, laugh and build relationships." },
+    ],
+  },
+  otherWays: {
+    heading: "More Ways to Make a Difference.",
+    recurring: {
+      label: "Recurring giving",
+      heading: "Make Your Support Ongoing.",
+      description: "Choose a recurring donation option on Dove’s external giving platform. Frequency and payment details are selected there.",
+      cta: "Start a recurring gift",
+    },
+    tribute: {
+      label: "Honor & memory",
+      heading: "Give in Honor or Memory.",
+      description: "Celebrate someone special or make a gift in memory of someone through Dove’s secure external giving platform.",
+      cta: "Make a tribute gift",
+    },
+  },
+  partnership: {
+    eyebrow: "Build something longer-term",
+    heading: "Corporate & Community Partnerships",
+    description: "Organizations can support Dove through program partnerships, community engagement and longer-term collaboration.",
+    cta: "Start a conversation",
+  },
+  trust: {
+    heading: "Giving Through Dove Is Simple.",
+    description: "Dove’s custom website helps you choose where to give. The donation itself takes place on the external giving platform.",
+    steps: [
+      "Choose how you would like to support Dove.",
+      "Select the relevant giving option.",
+      "Continue to Dove’s Network for Good / Bonterra page.",
+      "Enter and process payment information securely there.",
+    ],
+    statement: "This website does not collect or store your payment card information.",
+  },
+  faq: {
+    heading: "Donate FAQ",
+    items: [
+      { question: "Where are donations processed?", answer: "Donations are completed through Dove’s external Network for Good / Bonterra giving platform." },
+      { question: "Does this website collect my card information?", answer: "No. Payment details are entered and processed on the external giving platform." },
+      { question: "Can I make a recurring donation?", answer: "Yes. Recurring donation options are available through the external giving platform." },
+      { question: "Can I sponsor a child?", answer: "Yes. Dove has a dedicated Child Sponsorship program with its own giving destination." },
+      { question: "How can I support the Vocational Training Center?", answer: "Use Dove’s dedicated Vocational Training giving option." },
+      { question: "Can I donate in honor or memory of someone?", answer: "Yes. The external giving platform supports tribute, honor and memorial options." },
+      { question: "Can I donate items instead of money?", answer: "Dove has historically accepted certain in-kind donations in the Dominican Republic. Confirm current needs and drop-off arrangements with Dove before bringing or sending items." },
+      { question: "Can a business or organization support Dove?", answer: "Yes. Businesses, foundations and community organizations can contact Dove to discuss partnership opportunities." },
+    ],
+  },
+  final: {
+    eyebrow: "Give with purpose",
+    heading: "Every Gift Can Become an Opportunity.",
+    description: "Choose the way you want to help and continue securely to Dove’s external giving platform.",
+    primary: "Donate where it’s needed most",
+    secondary: "Sponsor a child",
+  },
+};
