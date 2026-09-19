@@ -127,6 +127,11 @@ export const travelWithPurposeEn = {
     description: "If you are planning your own Dove volunteering experience, the Volunteer page explains a day with Dove and the individual application and release process.",
     cta: "Explore Volunteering",
   },
+  reviews: {
+    eyebrow: "TRAVELER STORIES",
+    heading: "Hear from people who have experienced Dove firsthand.",
+    description: "Visitors and volunteers have shared their experiences with Dove in Puerto Plata. Explore their reviews on Tripadvisor.",
+  },
   faq: {
     eyebrow: "Travel With Purpose FAQ",
     heading: "Planning questions, answered.",

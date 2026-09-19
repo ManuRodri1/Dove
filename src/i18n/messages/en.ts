@@ -12,6 +12,7 @@ export const en = {
     { label: "What We Do", href: "" },
     { label: "Get Involved", href: "" },
     { label: "Our Impact", href: "" },
+    { label: "Campaigns", href: "" },
 
   ],
   getInvolvedNavigation: [
@@ -147,14 +148,12 @@ export const en = {
     eyebrow: "A lasting presence",
     heading: "Rooted in Puerto Plata",
     description:
-      "More than two decades of relationships, community and possibility.",
-    // TODO: CLIENT CONFIRM IMPACT METRICS
+      "More than two decades of building relationships, community, and opportunity.",
     metrics: [
-      { value: "20+", label: "Years in Puerto Plata" },
-      { value: "—", label: "Young People Served" },
-      { value: "—", label: "Students Trained" },
-      { value: "—", label: "Students in Careers" },
-      { value: "—", label: "Families Supported" },
+      { value: "140–160", label: "Children & young people served" },
+      { value: "6–18", label: "Ages served" },
+      { value: "7", label: "Puerto Plata neighborhoods" },
+      { value: "20+", label: "Years of commitment" },
     ],
   },
   experience: {
@@ -194,8 +193,9 @@ export const en = {
     link: { label: "Partner With Dove", href: "" },
   },
   stories: {
-    eyebrow: "Dispatches from the field",
-    heading: "Stories From Dove",
+    eyebrow: "Stories & News",
+    heading: "Stories from the Dove community",
+    introduction: "Updates, milestones, and everyday moments from Puerto Plata.",
     link: { label: "View all stories", href: "" },
     pending: "Development preview · Story awaiting migration",
     mediaPending: "Verified story photography to follow",

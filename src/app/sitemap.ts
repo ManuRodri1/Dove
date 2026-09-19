@@ -1,8 +1,2 @@
-import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/seo";
-export default function sitemap(): MetadataRoute.Sitemap {
-  return ["", "/our-story", "/what-we-do", "/child-sponsorship", "/vocational-training-center", "/donate", "/volunteer", "/travel-with-purpose", "/partnerships"].flatMap((path) => (["en", "es"] as const).map((locale) => ({
-    url: `${siteUrl}/${locale}${path}`,
-    alternates: { languages: { en: `${siteUrl}/en${path}`, es: `${siteUrl}/es${path}` } },
-  })));
-}
+import type { MetadataRoute } from "next";import { siteUrl } from "@/lib/seo";import { getPublicStorySlugs } from "@/lib/cms/public-stories";import { getPublicCampaignSlugs } from "@/lib/cms/public-campaigns";
+export default async function sitemap():Promise<MetadataRoute.Sitemap>{const fixed=["","/our-story","/what-we-do","/child-sponsorship","/vocational-training-center","/donate","/volunteer","/travel-with-purpose","/partnerships","/stories","/campaigns"].flatMap(path=>(["en","es"] as const).map(locale=>({url:`${siteUrl}/${locale}${path}`,alternates:{languages:{en:`${siteUrl}/en${path}`,es:`${siteUrl}/es${path}`}}})));const [storySlugs,campaignSlugs]=await Promise.all([getPublicStorySlugs(),getPublicCampaignSlugs()]);const stories=storySlugs.map(({locale,slug})=>({url:`${siteUrl}/${locale}/stories/${slug}`}));const campaigns=campaignSlugs.map(({locale,slug})=>({url:`${siteUrl}/${locale}/campaigns/${slug}`}));return [...fixed,...stories,...campaigns]}

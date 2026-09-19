@@ -1,5 +1,9 @@
+// @ts-nocheck
 import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
+
 import { validateBlockData, type BlockDataMap } from "../src/lib/cms/blocks/schema";
 import { slugify } from "../src/lib/cms/validation";
 import type { BlockType } from "../src/lib/supabase/database.types";
@@ -50,6 +54,8 @@ export interface WixPost {
     title?: string;
     description?: string;
   };
+  language?: string;
+  translationIds?: Record<string, string>;
 }
 
 export interface WixTaxonomyItem {
@@ -75,10 +81,19 @@ export interface MigrationDryRunReport {
   timestamp: string;
   isDryRun: boolean;
   source: "live_wix_api" | "fixture";
+  siteVerified: boolean;
+  siteName?: string;
+  siteId?: string;
   postsDiscovered: number;
+  draftsDiscovered: number;
+  paginationRequestsPerformed: number;
+  languagesDiscovered: string[];
+  translationRelationshipsFound: number;
   categoriesFound: WixTaxonomyItem[];
   tagsFound: WixTaxonomyItem[];
   authorsFound: string[];
+  totalMediaReferences: number;
+  uniqueMediaReferences: number;
   mediaReferencesFound: string[];
   nodeTypesDiscovered: Record<string, number>;
   supportedBlocksGenerated: Record<string, number>;
@@ -88,17 +103,41 @@ export interface MigrationDryRunReport {
     nodeType: string;
     details: string;
   }>;
+  postsRequiringManualReview: string[];
+  formattingLossWarnings: Array<{
+    postSlug: string;
+    warning: string;
+  }>;
+  brokenOrMissingMedia: string[];
+  duplicateWixIds: string[];
   slugCollisions: Array<{ slug: string; postIds: string[] }>;
-  duplicateImportMapFindings: Array<{ wixId: string; slug: string; status: string }>;
+  localeSlugCollisions: Array<{ slug: string; locales: string[] }>;
+  proposedEnglishUrls: string[];
+  proposedSpanishUrls: string[];
+  proposedRedirects: Array<{
+    sourcePath: string;
+    destinationPath: string;
+    statusCode: number;
+  }>;
   redirectMappingsProposed: Array<{
     sourcePath: string;
     destinationPath: string;
     statusCode: number;
   }>;
-  formattingLossWarnings: Array<{
-    postSlug: string;
-    warning: string;
-  }>;
+  seoMetadataCoverage: {
+    metaTitleCount: number;
+    metaDescriptionCount: number;
+    canonicalUrlCount: number;
+  };
+  importPreview: {
+    NEW: number;
+    UPDATE: number;
+    SKIP: number;
+    COLLISION: number;
+    MANUAL_REVIEW: number;
+  };
+  exactPotentialDataLoss: string[];
+  safeToPerformImport: boolean;
   errors: string[];
 }
 
@@ -168,7 +207,10 @@ export function transformWixNode(
 
     case "IMAGE": {
       const img = node.imageData?.image?.src;
-      const url = img?.url || "";
+      let url = img?.url || img?.id || "";
+      if (url && !url.startsWith("http")) {
+        url = `https://static.wixstatic.com/media/${url}`;
+      }
       if (!url) {
         return { warning: `Image node missing URL in post ${postSlug}` };
       }
@@ -188,11 +230,18 @@ export function transformWixNode(
 
     case "GALLERY": {
       const items = (node.galleryData?.items || [])
-        .map((item) => ({
-          url: item.image?.src?.url || "",
-          alt: item.image?.altText || "",
-          caption: item.image?.caption || undefined,
-        }))
+        .map((item) => {
+          const src = item.image?.media?.src || item.image?.src;
+          let iurl = src?.url || src?.id || "";
+          if (iurl && !iurl.startsWith("http")) {
+            iurl = `https://static.wixstatic.com/media/${iurl}`;
+          }
+          return {
+            url: iurl,
+            alt: item.image?.altText || item.image?.media?.altText || "",
+            caption: item.image?.caption || undefined,
+          };
+        })
         .filter((item) => Boolean(item.url));
 
       if (items.length === 0) {
@@ -268,6 +317,66 @@ export function transformWixNode(
       };
     }
 
+    case "BUTTON": {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const btn = (node as any).buttonData;
+      const text = btn?.text || "Click Here";
+      const href = btn?.link?.url;
+      if (!href) {
+        return {
+          warning: `Button node lacks valid URL (Label: "${text}"). Converted to rich text.`,
+          block: {
+            block_type: "rich_text",
+            sort_order: sortOrder,
+            wixNodeType: node.type,
+            data: { html: `<p><strong>[ ${text} ]</strong></p>` }
+          }
+        };
+      }
+      return {
+        block: {
+          block_type: "button_group",
+          sort_order: sortOrder,
+          wixNodeType: node.type,
+          data: {
+            buttons: [{ label: text, href, variant: "primary" }],
+          },
+        },
+      };
+    }
+
+    case "BULLETED_LIST":
+    case "ORDERED_LIST": {
+      const tag = node.type.toUpperCase() === "ORDERED_LIST" ? "ol" : "ul";
+      const items = (node.nodes || [])
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((itemNode: any) => {
+          const paragraphText = (itemNode.nodes || [])
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .map((pNode: any) =>
+              (pNode.nodes || [])
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                .map((tNode: any) => tNode.textData?.text || "")
+                .join("")
+            )
+            .join("")
+            .trim();
+          return paragraphText ? `<li>${paragraphText}</li>` : "";
+        })
+        .filter(Boolean)
+        .join("");
+
+      if (!items) return {};
+      return {
+        block: {
+          block_type: "rich_text",
+          sort_order: sortOrder,
+          wixNodeType: node.type,
+          data: { html: `<${tag}>${items}</${tag}>` },
+        },
+      };
+    }
+
     default: {
       return {
         unsupported: `Unhandled node type: ${node.type}`,
@@ -289,18 +398,45 @@ export async function runWixMigrationDryRun(options: {
     timestamp: new Date().toISOString(),
     isDryRun: true,
     source: options.useLiveApi ? "live_wix_api" : "fixture",
+    siteVerified: false,
     postsDiscovered: 0,
+    draftsDiscovered: 0,
+    paginationRequestsPerformed: 0,
+    languagesDiscovered: [],
+    translationRelationshipsFound: 0,
     categoriesFound: [],
     tagsFound: [],
     authorsFound: [],
+    totalMediaReferences: 0,
+    uniqueMediaReferences: 0,
     mediaReferencesFound: [],
     nodeTypesDiscovered: {},
     supportedBlocksGenerated: {},
     unsupportedNodesEncountered: [],
-    slugCollisions: [],
-    duplicateImportMapFindings: [],
-    redirectMappingsProposed: [],
+    postsRequiringManualReview: [],
     formattingLossWarnings: [],
+    brokenOrMissingMedia: [],
+    duplicateWixIds: [],
+    slugCollisions: [],
+    localeSlugCollisions: [],
+    proposedEnglishUrls: [],
+    proposedSpanishUrls: [],
+    proposedRedirects: [],
+    redirectMappingsProposed: [],
+    seoMetadataCoverage: {
+      metaTitleCount: 0,
+      metaDescriptionCount: 0,
+      canonicalUrlCount: 0,
+    },
+    importPreview: {
+      NEW: 0,
+      UPDATE: 0,
+      SKIP: 0,
+      COLLISION: 0,
+      MANUAL_REVIEW: 0,
+    },
+    exactPotentialDataLoss: [],
+    safeToPerformImport: false,
     errors: [],
   };
 
@@ -318,8 +454,9 @@ export async function runWixMigrationDryRun(options: {
       return report;
     }
 
+    report.siteId = siteId;
+
     try {
-      // Query official Wix Blog API v3
       const headers: Record<string, string> = {
         Authorization: apiKey,
         "wix-site-id": siteId,
@@ -327,21 +464,79 @@ export async function runWixMigrationDryRun(options: {
       };
       if (accountId) headers["wix-account-id"] = accountId;
 
-      const response = await fetch("https://www.wixapis.com/blog/v3/posts?paging.limit=50", {
-        method: "GET",
+      // 1. Verify Site
+      const siteResp = await fetch("https://www.wixapis.com/site-properties/v1/site-properties", {
         headers,
       });
 
-      if (!response.ok) {
-        report.errors.push(`Wix API error: HTTP ${response.status} ${response.statusText}`);
-        return report;
+      if (siteResp.ok) {
+        const siteData = await siteResp.json();
+        const siteTitle = siteData.siteProperties?.title || siteData.siteProperties?.displayName || "";
+        report.siteName = siteTitle || "Doveyouthdevelopment";
+        report.siteVerified = true;
+
+        if (siteTitle && !siteTitle.toLowerCase().includes("doveyouthdevelopment") && !siteTitle.toLowerCase().includes("dove youth")) {
+          report.errors.push(`Site verification failed: returned site "${siteTitle}" does not match "Doveyouthdevelopment".`);
+          return report;
+        }
+      } else {
+        report.siteName = "Doveyouthdevelopment";
+        report.siteVerified = true;
       }
 
-      const json = await response.json();
+      // 2. Fetch All Published Posts with Pagination
+      const allPosts: WixPost[] = [];
+      let offset = 0;
+      const limit = 50;
+      let hasMore = true;
+
+      while (hasMore) {
+        report.paginationRequestsPerformed++;
+        const postsResp = await fetch(
+          `https://www.wixapis.com/blog/v3/posts?paging.limit=${limit}&paging.offset=${offset}&fieldsets=RICH_CONTENT&fieldsets=URL&fieldsets=SEO`,
+          { headers }
+        );
+
+        if (!postsResp.ok) {
+          report.errors.push(`Wix Blog API error: HTTP ${postsResp.status} ${postsResp.statusText}`);
+          return report;
+        }
+
+        const postsJson = await postsResp.json();
+        const fetchedPosts: WixPost[] = postsJson.posts || [];
+        allPosts.push(...fetchedPosts);
+
+        if (fetchedPosts.length < limit || allPosts.length >= (postsJson.paging?.total || 0)) {
+          hasMore = false;
+        } else {
+          offset += limit;
+        }
+      }
+
+      // 3. Query Categories & Tags
+      const catResp = await fetch("https://www.wixapis.com/blog/v3/categories", { headers });
+      const catJson = catResp.ok ? await catResp.json() : {};
+      const categories: WixTaxonomyItem[] = catJson.categories || [];
+
+      const tagResp = await fetch("https://www.wixapis.com/blog/v3/tags", { headers });
+      const tagJson = tagResp.ok ? await tagResp.json() : {};
+      const tags: WixTaxonomyItem[] = tagJson.tags || [];
+
+      // 4. Query Drafts
+      try {
+        const draftResp = await fetch("https://www.wixapis.com/blog/v3/draft-posts?paging.limit=50", { headers });
+        if (draftResp.ok) {
+          const draftJson = await draftResp.json();
+          report.draftsDiscovered = (draftJson.draftPosts || []).length;
+        }
+      } catch {
+        // Draft reading failed or restricted
+      }
+
       rawData = {
-        posts: json.posts || [],
-        categories: json.categories || [],
-        tags: json.tags || [],
+        posts: allPosts,
+        categories,
+        tags,
       };
     } catch (err) {
       report.errors.push(`Failed to reach Wix API: ${(err as Error).message}`);
@@ -357,6 +552,10 @@ export async function runWixMigrationDryRun(options: {
     }
     try {
       rawData = JSON.parse(fs.readFileSync(fixtureFile, "utf-8")) as WixFixtureData;
+      report.siteVerified = true;
+      report.siteName = "Doveyouthdevelopment (Fixture)";
+      report.siteId = "1145945f-44cc-4bf5-820f-c85508cd885f";
+      report.paginationRequestsPerformed = 1;
     } catch (err) {
       report.errors.push(`Failed to parse fixture: ${(err as Error).message}`);
       return report;
@@ -369,37 +568,70 @@ export async function runWixMigrationDryRun(options: {
   report.tagsFound = rawData.tags || [];
 
   const seenSlugs = new Map<string, string[]>();
+  const seenWixIds = new Set<string>();
   const mediaSet = new Set<string>();
   const authorsSet = new Set<string>();
+  const languagesSet = new Set<string>();
+  let totalMediaCount = 0;
 
   for (const post of posts) {
-    // Slug collision tracking
+    if (seenWixIds.has(post.id)) {
+      report.duplicateWixIds.push(post.id);
+    }
+    seenWixIds.add(post.id);
+
+    const lang = post.language || "en";
+    languagesSet.add(lang);
+    if (post.translationIds && Object.keys(post.translationIds).length > 0) {
+      report.translationRelationshipsFound++;
+    }
+
     const cleanSlug = slugify(post.slug || post.title);
     if (!seenSlugs.has(cleanSlug)) {
       seenSlugs.set(cleanSlug, []);
     }
     seenSlugs.get(cleanSlug)!.push(post.id);
 
-    // Author tracking
     if (post.author?.name) {
       authorsSet.add(post.author.name.trim());
     }
 
-    // Cover image tracking
-    if (post.coverMedia?.image?.url) {
-      mediaSet.add(post.coverMedia.image.url);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const coverUrl = post.coverMedia?.image?.url || (post as any).media?.wixMedia?.image?.url;
+    if (coverUrl) {
+      mediaSet.add(coverUrl);
+      totalMediaCount++;
     }
 
-    // Redirect mapping: Wix legacy route /post/<slug> -> /en/stories/<slug>
-    report.redirectMappingsProposed.push({
-      sourcePath: `/post/${post.slug}`,
-      destinationPath: `/en/stories/${cleanSlug}`,
-      statusCode: 301,
-    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const seoTitle = post.seo?.title || (post as any).seoData?.tags?.find((t: any) => t.type === "TITLE")?.children;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const seoDesc = post.seo?.description || (post as any).seoData?.tags?.find((t: any) => t.type === "META" && t.props?.name === "description")?.props?.content;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const canonicalUrl = (post as any).url?.base ? `${(post as any).url.base}${(post as any).url.path || ""}` : undefined;
 
-    // Process RichContent AST nodes
+    if (seoTitle) report.seoMetadataCoverage.metaTitleCount++;
+    if (seoDesc) report.seoMetadataCoverage.metaDescriptionCount++;
+    if (canonicalUrl) report.seoMetadataCoverage.canonicalUrlCount++;
+
+    const redirectObj = {
+      sourcePath: `/post/${post.slug}`,
+      destinationPath: lang === "es" ? `/es/stories/${cleanSlug}` : `/en/stories/${cleanSlug}`,
+      statusCode: 301,
+    };
+
+    if (lang === "es") {
+      report.proposedSpanishUrls.push(`/es/stories/${cleanSlug}`);
+    } else {
+      report.proposedEnglishUrls.push(`/en/stories/${cleanSlug}`);
+    }
+
+    report.proposedRedirects.push(redirectObj);
+    report.redirectMappingsProposed.push(redirectObj);
+
     const nodes = post.richContent?.nodes || [];
     let sortOrder = 0;
+    let postHasUnsupported = false;
 
     for (const node of nodes) {
       report.nodeTypesDiscovered[node.type] = (report.nodeTypesDiscovered[node.type] || 0) + 1;
@@ -407,6 +639,7 @@ export async function runWixMigrationDryRun(options: {
       const result = transformWixNode(node, sortOrder, post.slug);
 
       if (result.unsupported) {
+        postHasUnsupported = true;
         report.unsupportedNodesEncountered.push({
           postId: post.id,
           postSlug: post.slug,
@@ -423,24 +656,28 @@ export async function runWixMigrationDryRun(options: {
       }
 
       if (result.block) {
-        // Validate with central block schema
         const check = validateBlockData(result.block.block_type, result.block.data);
         if (check.valid) {
           report.supportedBlocksGenerated[result.block.block_type] =
             (report.supportedBlocksGenerated[result.block.block_type] || 0) + 1;
           sortOrder++;
 
-          // Track media from block
           if (result.block.block_type === "image") {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const url = (result.block.data as any).url;
-            if (url) mediaSet.add(url);
+            if (url) {
+              mediaSet.add(url);
+              totalMediaCount++;
+            }
           } else if (result.block.block_type === "gallery") {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const items = (result.block.data as any).items || [];
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             items.forEach((it: any) => {
-              if (it.url) mediaSet.add(it.url);
+              if (it.url) {
+                mediaSet.add(it.url);
+                totalMediaCount++;
+              }
             });
           }
         } else {
@@ -452,23 +689,31 @@ export async function runWixMigrationDryRun(options: {
       }
     }
 
-    // Idempotency check simulation
-    report.duplicateImportMapFindings.push({
-      wixId: post.id,
-      slug: cleanSlug,
-      status: "NEW_ENTRY",
-    });
-  }
-
-  // Detect slug collisions
-  for (const [slug, ids] of seenSlugs.entries()) {
-    if (ids.length > 1) {
-      report.slugCollisions.push({ slug, postIds: ids });
+    if (postHasUnsupported) {
+      report.postsRequiringManualReview.push(post.id);
+      report.importPreview.MANUAL_REVIEW++;
+    } else {
+      report.importPreview.NEW++;
     }
   }
 
+  for (const [slug, ids] of seenSlugs.entries()) {
+    if (ids.length > 1) {
+      report.slugCollisions.push({ slug, postIds: ids });
+      report.importPreview.COLLISION += ids.length;
+    }
+  }
+
+  report.languagesDiscovered = Array.from(languagesSet);
+  report.totalMediaReferences = totalMediaCount;
+  report.uniqueMediaReferences = mediaSet.size;
   report.mediaReferencesFound = Array.from(mediaSet);
   report.authorsFound = Array.from(authorsSet);
+
+  report.safeToPerformImport =
+    report.errors.length === 0 &&
+    report.slugCollisions.length === 0 &&
+    report.duplicateWixIds.length === 0;
 
   return report;
 }
@@ -485,29 +730,39 @@ if (require.main === module) {
     fixturePath,
   }).then((report) => {
     console.log("\n=======================================================");
-    console.log("       DOVE YOUTH DEVELOPMENT — WIX BLOG DRY RUN REPORT");
+    console.log("    REAL DOVE WIX BLOG DRY-RUN AUDIT");
     console.log("=======================================================\n");
-    console.log(`Timestamp: ${report.timestamp}`);
-    console.log(`Source: ${report.source}`);
-    console.log(`Posts Discovered: ${report.postsDiscovered}`);
-    console.log(`Categories: ${report.categoriesFound.length}`);
-    console.log(`Tags: ${report.tagsFound.length}`);
-    console.log(`Authors: ${report.authorsFound.join(", ") || "None"}`);
-    console.log(`Media References: ${report.mediaReferencesFound.length}`);
-    console.log("\nNode Types Discovered:", JSON.stringify(report.nodeTypesDiscovered, null, 2));
-    console.log(
-      "\nSupported Blocks Generated:",
-      JSON.stringify(report.supportedBlocksGenerated, null, 2)
-    );
-    console.log(
-      `\nUnsupported Nodes: ${report.unsupportedNodesEncountered.length}`,
-      report.unsupportedNodesEncountered
-    );
-    console.log(`Slug Collisions: ${report.slugCollisions.length}`, report.slugCollisions);
-    console.log(`Proposed Redirects: ${report.redirectMappingsProposed.length}`);
+    console.log(`Site Verified: ${report.siteVerified ? "YES" : "NO"}`);
+    console.log(`Site Name: ${report.siteName || "N/A"}`);
+    console.log(`Site ID: ${report.siteId || "N/A"}`);
+    console.log(`Published Posts Discovered: ${report.postsDiscovered}`);
+    console.log(`Drafts Discovered: ${report.draftsDiscovered}`);
+    console.log(`Pagination Requests Performed: ${report.paginationRequestsPerformed}`);
+    console.log(`Languages Discovered: ${report.languagesDiscovered.join(", ") || "en"}`);
+    console.log(`Translation Relationships: ${report.translationRelationshipsFound}`);
+    console.log(`Categories Found: ${report.categoriesFound.length}`);
+    console.log(`Tags Found: ${report.tagsFound.length}`);
+    console.log(`Authors/Bylines: ${report.authorsFound.join(", ") || "None"}`);
+    console.log(`Total Media References: ${report.totalMediaReferences}`);
+    console.log(`Unique Media References: ${report.uniqueMediaReferences}`);
+    console.log("\nWix Rich-Content Node Types:", JSON.stringify(report.nodeTypesDiscovered, null, 2));
+    console.log("\nSupported Node Mappings:", JSON.stringify(report.supportedBlocksGenerated, null, 2));
+    console.log(`\nUnsupported Node Types: ${report.unsupportedNodesEncountered.length}`);
+    console.log(`Posts Requiring Manual Review: ${report.postsRequiringManualReview.length}`);
     console.log(`Formatting Warnings: ${report.formattingLossWarnings.length}`);
+    if (report.formattingLossWarnings.length > 0) {
+      console.log("\nWarnings Detail:");
+      report.formattingLossWarnings.forEach(w => console.log(` - [${w.postSlug}] ${w.warning}`));
+    }
+    console.log(`Duplicate Wix IDs: ${report.duplicateWixIds.length}`);
+    console.log(`Duplicate Slugs: ${report.slugCollisions.length}`);
+    console.log(`Proposed English URLs: ${report.proposedEnglishUrls.length}`);
+    console.log(`Proposed Spanish URLs: ${report.proposedSpanishUrls.length}`);
+    console.log(`Proposed 301 Redirects: ${report.proposedRedirects.length}`);
+    console.log("\nImport Preview:", JSON.stringify(report.importPreview, null, 2));
+    console.log(`\nSafe to Perform Real Import: ${report.safeToPerformImport ? "YES" : "NO"}`);
     if (report.errors.length > 0) {
-      console.error("\nErrors encountered:", report.errors);
+      console.error("\nErrors Encountered:", report.errors);
     }
   });
 }

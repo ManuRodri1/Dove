@@ -1,0 +1,2 @@
+import { NextRequest,NextResponse } from "next/server";import { getRedirectBySourcePath } from "@/lib/cms/public-stories";
+export async function GET(request:NextRequest,{params}:{params:Promise<{slug:string}>}){const {slug}=await params;const source=`/post/${slug}`,record=await getRedirectBySourcePath(source);if(!record)return new Response("Not found",{status:404});return NextResponse.redirect(new URL(record.destination_path,request.url),record.status_code===301?308:record.status_code)}

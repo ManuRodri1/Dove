@@ -109,39 +109,16 @@ export function SupportWays({ home }: { home: HomeContent }) {
     </section>
   );
 }
+import HomeImpactStrip from "./HomeImpactStrip";
+
 export function ImpactStrip({ home }: { home: HomeContent }) {
   return (
-    <section
-      className="section impact"
-      id="impact"
-      aria-labelledby="impact-heading"
-    >
-      <div className="container">
-        <SectionHeading
-          eyebrow={home.impact.eyebrow}
-          title={home.impact.heading}
-          description={home.impact.description}
-          id="impact-heading"
-        />
-        <dl className="metrics">
-          {home.impact.metrics.map((metric) => (
-            <div key={metric.label}>
-              <dt>{metric.label}</dt>
-              <dd>
-                {metric.value === "—" ? (
-                  <>
-                    <span aria-hidden="true">—</span>
-                    <span className="sr-only">{home.ui.unpublished}</span>
-                  </>
-                ) : (
-                  metric.value
-                )}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </section>
+    <HomeImpactStrip
+      eyebrow={home.impact.eyebrow}
+      title={home.impact.heading}
+      description={home.impact.description}
+      metrics={home.impact.metrics}
+    />
   );
 }
 export function ExperienceDove({ home }: { home: HomeContent }) {

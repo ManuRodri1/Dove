@@ -1,3 +1,9 @@
+@import "./stories.css";
+
+/* Hallmark · macrostructure: Living Archive · tone: warm editorial · anchor hue: teal
+ * design-system: design.md · pre-emit critique: P5 H5 E4 S5 R5 V5
+ */
+
 /* Hallmark · macrostructure: Marquee Hero / editorial sequence · tone: warm nonprofit · anchor hue: teal
  * theme: studied-DNA (source: user-approved Stitch images) · Playfair Display + Manrope
  * design-system: design.md · pre-emit critique: P5 H5 E4 S4 R5 V5
@@ -5,6 +11,77 @@
  */
 * {
   box-sizing: border-box;
+}
+
+/* Campaigns: a living editorial archive, not a fundraising dashboard. */
+.campaigns-hero { padding-block: clamp(var(--space-3xl), 10vw, var(--space-5xl)); background: var(--color-paper); border-block-end: var(--rule-fine) solid var(--color-rule); }
+.campaigns-hero .container { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .55fr); gap: var(--space-xl); align-items: end; }
+.campaigns-hero .eyebrow { grid-column: 1 / -1; }
+.campaigns-hero h1 { max-width: 14ch; }
+.campaigns-hero .lede { max-width: 34rem; padding-block-end: var(--space-sm); }
+.campaigns-index { display: grid; gap: var(--space-4xl); padding-block: var(--space-4xl); }
+.campaigns-index > section { display: grid; gap: var(--space-xl); }
+.campaign-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md); padding-block-end: var(--space-sm); border-block-end: var(--rule-fine) solid var(--color-rule); }
+.campaign-section-head > span { color: var(--color-accent-text); font-weight: 800; letter-spacing: var(--tracking-label); }
+.campaign-feature { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr); min-height: 32rem; background: var(--color-teal); color: var(--color-white); }
+.campaign-feature-media { position: relative; min-height: 28rem; overflow: clip; }
+.campaign-feature-copy { display: flex; flex-direction: column; justify-content: end; align-items: start; gap: var(--space-md); padding: clamp(var(--space-lg), 5vw, var(--space-2xl)); }
+.campaign-feature h3, .campaign-feature dt { color: var(--color-white); }
+.campaign-feature h3 { font-size: var(--text-2xl); }
+.campaign-feature-copy > p:not(.campaign-state) { color: var(--color-light-muted); }
+.campaign-state { color: var(--color-white); font-size: var(--text-xs); font-weight: 800; letter-spacing: var(--tracking-label); text-transform: uppercase; }
+.campaign-facts { display: flex; flex-wrap: wrap; gap: var(--space-lg); }
+.campaign-facts div { display: grid; gap: var(--space-3xs); }
+.campaign-facts dt { color: var(--color-muted); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: var(--tracking-label); }
+.campaign-facts dd { font-weight: 700; }
+.campaign-feature .campaign-facts dt { color: var(--color-light-muted); }
+.campaign-history { display: grid; }
+.campaign-history-item { display: grid; grid-template-columns: minmax(7rem, .25fr) minmax(13rem, .6fr) minmax(0, 1.15fr); gap: var(--space-xl); align-items: center; padding-block: var(--space-xl); border-block-end: var(--rule-fine) solid var(--color-rule); }
+.campaign-history-media { position: relative; min-height: 13rem; overflow: clip; border-radius: var(--radius-small); box-shadow: var(--shadow-photo); }
+.campaign-history-item > div:last-child { display: grid; justify-items: start; gap: var(--space-sm); }
+.campaign-history-item h3 { font-size: var(--text-xl); }
+.campaign-history-year .campaign-facts { display: grid; }
+.campaign-empty { padding: clamp(var(--space-xl), 6vw, var(--space-3xl)); background: var(--color-paper); border-inline-start: .4rem solid var(--color-accent); }
+.campaign-empty p { max-width: 44rem; font-family: var(--font-display); font-size: var(--text-xl); color: var(--color-ink); }
+.campaign-empty-actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.campaign-view-all { justify-self: start; }
+.campaign-detail-hero { position: relative; min-height: 36rem; display: flex; align-items: end; background: var(--color-teal); color: var(--color-white); overflow: clip; }
+.campaign-detail-overlay { position: absolute; inset: 0; background: var(--color-hero-overlay-start); }
+.campaign-detail-heading { position: relative; z-index: 1; display: grid; justify-items: start; gap: var(--space-md); padding-block: clamp(var(--space-3xl), 10vw, var(--space-5xl)) var(--space-3xl); }
+.campaign-detail-heading h1 { color: var(--color-white); max-width: 16ch; }
+.campaign-detail-heading .eyebrow { color: var(--color-light-muted); }
+.campaign-detail-heading .lede { max-width: 44rem; color: var(--color-light-muted); }
+.campaign-back { min-height: 44px; display: inline-flex; align-items: center; text-decoration: underline; text-underline-offset: .3em; }
+.campaign-detail-summary { background: var(--color-paper); border-block-end: var(--rule-fine) solid var(--color-rule); }
+.campaign-detail-summary > .container { min-height: 10rem; display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) auto; gap: var(--space-xl); align-items: center; padding-block: var(--space-lg); }
+.campaign-detail-status { display: grid; gap: var(--space-2xs); }
+.campaign-detail-status span { color: var(--color-accent-text); font-size: var(--text-xs); font-weight: 800; text-transform: uppercase; letter-spacing: var(--tracking-label); }
+.campaign-money { display: flex; flex-wrap: wrap; gap: var(--space-xl); }
+.campaign-money div { display: grid; gap: var(--space-3xs); }
+.campaign-money dt { color: var(--color-muted); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; }
+.campaign-money dd { color: var(--color-ink); font-family: var(--font-display); font-size: var(--text-xl); }
+.campaign-money small { color: var(--color-muted); }
+.campaign-updates { background: var(--color-paper); }
+.campaign-updates ol { list-style: none; margin: var(--space-xl) 0 0; padding: 0; display: grid; }
+.campaign-updates li { display: grid; grid-template-columns: minmax(8rem, .3fr) minmax(0, .7fr) minmax(0, 1fr); gap: var(--space-lg); padding-block: var(--space-lg); border-block-end: var(--rule-fine) solid var(--color-rule); }
+.campaign-updates li > p:first-child { color: var(--color-accent-text); font-size: var(--text-xs); font-weight: 800; text-transform: uppercase; letter-spacing: var(--tracking-label); }
+.campaign-updates h3 a { text-decoration: underline; text-decoration-color: var(--color-accent); text-underline-offset: .22em; }
+
+@media (max-width: 56rem) {
+  .campaigns-hero .container, .campaign-feature, .campaign-history-item, .campaign-detail-summary > .container, .campaign-updates li { grid-template-columns: minmax(0, 1fr); }
+  .campaign-feature-media { min-height: 20rem; }
+  .campaign-history-year .campaign-facts { display: flex; }
+  .campaign-detail-summary > .container { justify-items: start; }
+}
+
+@media (max-width: 30rem) {
+  .campaigns-hero, .campaigns-index { padding-block: var(--space-2xl); }
+  .campaign-section-head { align-items: end; }
+  .campaign-feature-media { min-height: 16rem; }
+  .campaign-empty-actions { display: grid; width: 100%; }
+  .campaign-empty-actions .button { width: 100%; }
+  .campaign-detail-hero { min-height: 31rem; }
+  .campaign-money { display: grid; }
 }
 html,
 body {
@@ -2370,4 +2447,166 @@ button:active {
   .travel-individual .button { max-width: 100%; padding-inline: var(--space-xs); font-size: var(--text-caption); }
   html[lang="es"] .travel-hero .button,
   html[lang="es"] .group-inquiry-form .button { font-size: var(--text-2xs); }
+}
+
+/* Hallmark · genre: warm editorial nonprofit · macrostructure: Our Impact
+ * theme: locked Dove system · verified impact metrics & real human stories
+ * visual authority: design.md
+ */
+.impact-hero { background: var(--color-paper); }
+.impact-hero-grid { display: grid; gap: var(--space-xl); align-items: end; }
+.impact-hero-copy { position: relative; z-index: 1; }
+.impact-hero h1 { max-width: 12em; }
+.impact-hero .lede { max-width: 42rem; }
+.impact-hero-actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-xs); margin-top: var(--space-lg); }
+.impact-hero-media { min-width: 0; }
+.impact-hero-media .photo { height: 26rem; min-height: 0; aspect-ratio: auto; border-radius: var(--radius-card) var(--radius-card) 0 0; }
+.impact-media-caption { padding: var(--space-sm); border: var(--rule-fine) solid var(--color-rule); border-top: 0; border-radius: 0 0 var(--radius-small) var(--radius-small); color: var(--color-muted); font-size: var(--text-xs); }
+
+.impact-glance-head { margin-bottom: var(--space-2xl); }
+.impact-glance-strip { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-xl); border-top: var(--rule-fine) solid var(--color-rule); border-bottom: var(--rule-fine) solid var(--color-rule); padding-block: var(--space-2xl); }
+.impact-glance-item { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.impact-glance-val { font: 600 var(--text-display)/1 var(--font-display); color: var(--color-teal); letter-spacing: var(--tracking-display); }
+.impact-glance-label { font-size: var(--text-base); font-weight: 700; color: var(--color-ink); }
+.impact-glance-context { font-size: var(--text-sm); color: var(--color-body); line-height: 1.5; margin-top: var(--space-2xs); }
+.impact-glance-note { margin-top: var(--space-lg); color: var(--color-muted); font-size: var(--text-xs); }
+
+.impact-pathway-head { max-width: 50rem; margin-bottom: var(--space-2xl); }
+.impact-pathway-flow { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-lg); border-top: var(--rule-fine) solid var(--color-rule); padding-top: var(--space-xl); }
+.impact-pathway-step { padding-block: var(--space-md); border-bottom: var(--rule-fine) solid var(--color-rule); }
+.impact-pathway-num { display: inline-block; color: var(--color-accent-text); font: 600 var(--text-lg)/1 var(--font-display); margin-bottom: var(--space-xs); }
+.impact-pathway-title { font-size: var(--text-lg); color: var(--color-teal); margin-bottom: var(--space-2xs); }
+.impact-pathway-desc { font-size: var(--text-sm); color: var(--color-body); line-height: 1.55; }
+
+.impact-story-feature { scroll-margin-top: var(--header-height); }
+.impact-story-grid { display: grid; gap: var(--space-2xl); align-items: center; }
+.impact-story-tag { display: inline-block; font-size: var(--text-xs); font-weight: 700; letter-spacing: var(--tracking-label); color: var(--color-teal); text-transform: uppercase; margin-bottom: var(--space-xs); }
+.impact-story-copy h2 { font-size: var(--text-section); max-width: 14em; margin-bottom: var(--space-md); }
+.impact-story-text { font-size: var(--text-lg); line-height: 1.6; color: var(--color-body); margin-bottom: var(--space-lg); max-width: 44rem; }
+.impact-story-media .photo { height: 26rem; aspect-ratio: auto; border-radius: var(--radius-card); }
+
+.impact-snapshots-head { max-width: 48rem; margin-bottom: var(--space-2xl); }
+.impact-snapshots-grid { display: grid; gap: var(--space-xl); }
+.impact-snapshot-card { padding: var(--space-xl); border: var(--rule-fine) solid var(--color-rule); border-radius: var(--radius-card); background: var(--color-white); display: flex; flex-direction: column; gap: var(--space-xs); }
+.impact-snapshot-val { font: 600 clamp(2.5rem, 5vw, 3.8rem)/1 var(--font-display); color: var(--color-teal); }
+.impact-snapshot-card h3 { font-size: var(--text-base); font-family: var(--font-body); font-weight: 600; color: var(--color-ink); }
+.impact-snapshot-tag { display: inline-block; font-size: var(--text-xs); font-weight: 700; color: var(--color-accent-text); margin-top: auto; }
+
+.impact-program-head { max-width: 48rem; margin-bottom: var(--space-2xl); }
+.impact-program-list { display: grid; border-top: var(--rule-fine) solid var(--color-rule); }
+.impact-program-item { padding-block: var(--space-lg); border-bottom: var(--rule-fine) solid var(--color-rule); }
+.impact-program-item h3 { font-size: var(--text-xl); color: var(--color-teal); margin-bottom: var(--space-2xs); }
+.impact-program-item p { font-size: var(--text-base); color: var(--color-body); line-height: 1.55; max-width: 42rem; }
+
+.impact-bridge-grid { display: grid; gap: var(--space-xl); align-items: end; }
+.impact-bridge-copy { max-width: 48rem; }
+.impact-bridge-actions { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-sm); margin-top: var(--space-md); }
+
+@media (min-width: 40rem) {
+  .impact-hero-actions,
+  .impact-bridge-actions { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .impact-glance-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .impact-snapshots-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .impact-program-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .impact-program-item { padding-inline: var(--space-lg); border-right: var(--rule-fine) solid var(--color-rule); }
+  .impact-program-item:nth-child(2n) { border-right: 0; }
+}
+
+@media (min-width: 48rem) {
+  .impact-hero-grid { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: var(--space-2xl); }
+  .impact-hero-media .photo { height: 36rem; }
+  .impact-story-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: var(--space-3xl); }
+  .impact-story-feature--alt .impact-story-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .impact-story-media .photo { height: 32rem; }
+  .impact-bridge-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: var(--space-2xl); }
+}
+
+@media (min-width: 64rem) {
+  .impact-glance-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .impact-pathway-flow { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .impact-pathway-step { border-right: var(--rule-fine) solid var(--color-rule); border-bottom: 0; padding-inline: var(--space-sm); }
+  .impact-pathway-step:last-child { border-right: 0; }
+  .impact-program-list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .impact-program-item:nth-child(2n) { border-right: var(--rule-fine) solid var(--color-rule); }
+  .impact-program-item:last-child { border-right: 0; }
+}
+
+@media (max-width: 39.99rem) {
+  .impact-hero .button,
+  .impact-bridge-actions .button { max-width: 100%; padding-inline: var(--space-xs); font-size: var(--text-caption); }
+}
+
+/* Hallmark · genre: warm editorial nonprofit · macrostructure: Home Verified Metrics Strip
+ * visual authority: design.md
+ */
+.home-impact { background: var(--color-paper); }
+.home-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl) var(--space-lg);
+  padding-block: var(--space-2xl);
+  margin: 0;
+  border-top: var(--rule-fine) solid var(--color-rule);
+  border-bottom: var(--rule-fine) solid var(--color-rule);
+}
+.home-metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+.home-metric-value {
+  margin: 0;
+  font: 600 clamp(2.4rem, 5vw, 3.8rem)/1 var(--font-display);
+  color: var(--color-teal);
+  letter-spacing: var(--tracking-display);
+  font-variant-numeric: tabular-nums;
+}
+.home-metric-label {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.35;
+}
+
+@media (min-width: 48rem) {
+  .home-metrics-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-xl);
+  }
+  .home-metric-item {
+    padding-inline: var(--space-lg);
+    border-right: var(--rule-fine) solid var(--color-rule);
+  }
+  .home-metric-item:first-child {
+    padding-left: 0;
+  }
+  .home-metric-item:last-child {
+    padding-right: 0;
+    border-right: 0;
+  }
+}
+
+/* Hallmark · genre: editorial travel narrative · Tripadvisor / Elfsight Reviews Wrapper
+ * theme: locked Dove design system · visual authority: design.md
+ */
+.travel-reviews {
+  scroll-margin-top: var(--header-height);
+}
+.travel-reviews .section-heading {
+  max-width: 48rem;
+  margin-bottom: var(--space-xl);
+}
+.travel-reviews-embed-container {
+  min-height: 280px;
+  width: 100%;
+  overflow-x: auto;
+}
+.travel-reviews-fallback-notice {
+  padding: var(--space-lg);
+  border: var(--rule-fine) solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
 }

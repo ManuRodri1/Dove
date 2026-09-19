@@ -1,0 +1,985 @@
+{
+  "id": "7af6baa4-bc0e-46e3-b33d-30df7e4d08d8",
+  "title": "Greetings from the Dominican Republic!",
+  "excerpt": "What an incredible year 2022 was for Dove!  Some highlights include: We completed construction on our entire building, including...",
+  "firstPublishedDate": "2023-02-27T00:31:16.787Z",
+  "lastPublishedDate": "2023-02-27T00:31:16.787Z",
+  "url": {
+    "base": "https://www.doveyouthdevelopment.org",
+    "path": "/post/greetings-from-the-dominican-republic"
+  },
+  "slug": "greetings-from-the-dominican-republic",
+  "featured": false,
+  "pinned": false,
+  "categoryIds": [],
+  "memberId": "2aef7e2a-619a-40fb-a67a-eb67b015c36a",
+  "hashtags": [],
+  "commentingEnabled": true,
+  "minutesToRead": 2,
+  "tagIds": [],
+  "relatedPostIds": [],
+  "pricingPlanIds": [],
+  "language": "en",
+  "seoData": {
+    "tags": []
+  },
+  "richContent": {
+    "nodes": [
+      {
+        "type": "PARAGRAPH",
+        "id": "foo",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "What an incredible year 2022 was for Dove!",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Some highlights include:",
+              "decorations": []
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "BULLETED_LIST",
+        "id": "zubpew3mynwnwp1705975",
+        "nodes": [
+          {
+            "type": "LIST_ITEM",
+            "id": "y4284w3mynwnwp1705969",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "fkri1",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "We completed construction on our entire building, including renovating classrooms for the new Vocational Training Center!",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "LEFT"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "LIST_ITEM",
+            "id": "rxruuw3mynwnwp1705971",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "dsr7v",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "We launched our Job Readiness Program to prepare our teens to get into the workforce and help them find employment.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "LEFT"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "LIST_ITEM",
+            "id": "ltw3bw3mynwnwp1705973",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "c3ruq",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "We’ve started enrolling children who have been on our waiting list since the beginning of the pandemic.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "LEFT"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          }
+        ],
+        "bulletedListData": {
+          "indentation": 0
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "4vegg",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Before and after- Computer Lab:",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "IMAGE",
+        "id": "1ogre",
+        "nodes": [],
+        "imageData": {
+          "containerData": {
+            "width": {
+              "custom": "604"
+            },
+            "alignment": "CENTER",
+            "textWrap": true
+          },
+          "image": {
+            "src": {
+              "id": "294108_c01e969beafb4d2f9cc9284724288821~mv2.jpg"
+            },
+            "width": 1024,
+            "height": 1024
+          }
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "akkin",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Before and after- Beauty Salon:",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "IMAGE",
+        "id": "c0n6d",
+        "nodes": [],
+        "imageData": {
+          "containerData": {
+            "width": {
+              "custom": "583"
+            },
+            "alignment": "CENTER",
+            "textWrap": true
+          },
+          "image": {
+            "src": {
+              "id": "294108_485659cb962b45e0b2f170b7bd7c7d72~mv2.jpg"
+            },
+            "width": 1024,
+            "height": 1024
+          }
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "2febj",
+        "nodes": [],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "bcabc",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "ALL THANKS TO YOU!",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "It’s been very exciting to have a beautiful space for our children to learn and grow into incredible human beings!",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Dove has been a continuous support to our local community, serving the youth and families in the impoverished areas of Puerto Plata through our many programs and classes. We focus on education and connection in a safe environment to learn, laugh and grow, providing new opportunities for a better future!",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "What does 2023 have in store for us?",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "BULLETED_LIST",
+        "id": "eriokw3mynwnwp1705990",
+        "nodes": [
+          {
+            "type": "LIST_ITEM",
+            "id": "p1kvvw3mynwnwp1705980",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "21tcl",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "Enrolling up to 100 new students who are on our waiting list who are excited for this opportunity.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "AUTO",
+                    "lineHeight": "1.2"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "LIST_ITEM",
+            "id": "yka8nw3mynwnwp1705982",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "etb9k",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "Training our 65 teens in our NEW Vocational Training Center to fulfill their dreams into adulthood.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "AUTO",
+                    "lineHeight": "1.2"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "LIST_ITEM",
+            "id": "4oauqw3mynwnwp1705984",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "2lv4l",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "Expanding our monthly food program to assist our families in need.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "AUTO",
+                    "lineHeight": "1.2"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "LIST_ITEM",
+            "id": "8w1slw3mynwnwp1705986",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "ddqg5",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "Connect with local businesses and tourism to build relationships for future employment, opportunities and support.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "AUTO",
+                    "lineHeight": "1.2"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "LIST_ITEM",
+            "id": "ot6y1w3mynwnwp1705988",
+            "nodes": [
+              {
+                "type": "PARAGRAPH",
+                "id": "ejtmc",
+                "nodes": [
+                  {
+                    "type": "TEXT",
+                    "id": "",
+                    "nodes": [],
+                    "textData": {
+                      "text": "Ramp up our volunteer program to best support our connection with our students and classes while having a meaningful lasting experience.",
+                      "decorations": []
+                    }
+                  }
+                ],
+                "paragraphData": {
+                  "textStyle": {
+                    "textAlignment": "AUTO",
+                    "lineHeight": "1.2"
+                  },
+                  "indentation": 0
+                }
+              }
+            ]
+          }
+        ],
+        "bulletedListData": {
+          "indentation": 0
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "eior4",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Learning how to read:",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "IMAGE",
+        "id": "ajm9l",
+        "nodes": [],
+        "imageData": {
+          "containerData": {
+            "width": {
+              "custom": "528"
+            },
+            "alignment": "CENTER",
+            "textWrap": true
+          },
+          "image": {
+            "src": {
+              "id": "294108_e267343f516649399de34c96043f9650~mv2.jpg"
+            },
+            "width": 1276,
+            "height": 1592
+          }
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "c2e3",
+        "nodes": [],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "aagqc",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "JRP Sales Classes:",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "IMAGE",
+        "id": "4u7vp",
+        "nodes": [],
+        "imageData": {
+          "containerData": {
+            "width": {
+              "custom": "539"
+            },
+            "alignment": "CENTER",
+            "textWrap": true
+          },
+          "image": {
+            "src": {
+              "id": "294108_083f124fc99847aabf7e8fa5b5daefe0~mv2.jpg"
+            },
+            "width": 1280,
+            "height": 958
+          }
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "3beg6",
+        "nodes": [],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "9as0r",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "If you're new to Dove and want to get involved, contact Liz Rooney at:",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "executivedirector@doveyouthdevelopment.org",
+              "decorations": [
+                {
+                  "type": "COLOR",
+                  "colorData": {
+                    "foreground": "#1d05f7"
+                  }
+                },
+                {
+                  "type": "LINK",
+                  "linkData": {
+                    "link": {
+                      "url": "mailto:executivedirector@doveyouthdevelopment.org",
+                      "target": "BLANK"
+                    }
+                  }
+                },
+                {
+                  "type": "UNDERLINE",
+                  "underlineData": true
+                }
+              ]
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " or check out our website; ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "www.doveyouthdevelopment.org",
+              "decorations": [
+                {
+                  "type": "COLOR",
+                  "colorData": {
+                    "foreground": "#1d05f7"
+                  }
+                },
+                {
+                  "type": "LINK",
+                  "linkData": {
+                    "link": {
+                      "url": "https://na01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fem.networkforgood.com%2Fls%2Fclick%3Fupn%3Dd9K6ASy0zzX96vUyeY2s4CR-2BP5sogwqf-2F8mnpJRAWAECwb9LL8-2FbTbRr7uREZeRZ8zQ__SEHk-2BW6z79L-2B-2FTsHrD9NF-2BkE4of7UfQqM9-2BK-2BBcQiUmFud2-2FDgBIAJ0-2BSCXA0nlTMX8RvoXw6o8eQ0u1vX5QTTQ1Q3qhp1BBX-2FApAXeercXWets3JsOlqq-2FaxqOYurZThl-2F-2B2uuD61XXTcaRQP4nSgSSjyrpmYGaPYpw2-2BJpLmRGlgUAeBwou0eVBM-2Fe5GPX4XfKI9ZWU3A-2FmcbsFJhNJPs-2F6fvOfdpIm-2BR7rvtr-2FlDaNJarF-2FUUcZsMbZP5o71lXdPfuO2fg1Q8IBYtkOUB2i2Z3Ecxf5KruaKQGavrLlpG2vK0Xsc-2FRir7zYNvImd-2FoU2jkJD02Glj8bmg7QH0-2BRXCYjPyMRv-2B26LRvhpzSBk-3D&data=05%7C01%7C%7C597228ccb4ee4ef4fc2008dafe06e491%7C84df9e7fe9f640afb435aaaaaaaaaaaa%7C1%7C0%7C638101602803749584%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000%7C%7C%7C&sdata=dR7umdA5xMOQphk3YpMvPwEDXQa%2FUKjwplRieBiWQB4%3D&reserved=0",
+                      "target": "BLANK"
+                    }
+                  }
+                },
+                {
+                  "type": "UNDERLINE",
+                  "underlineData": true
+                }
+              ]
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "If you would like to make a donation to help us-please do!",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Click the donate button below",
+              "decorations": [
+                {
+                  "type": "BOLD",
+                  "fontWeightValue": 700
+                }
+              ]
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      },
+      {
+        "type": "BUTTON",
+        "id": "830ju",
+        "nodes": [],
+        "buttonData": {
+          "containerData": {
+            "width": {
+              "custom": "152"
+            },
+            "alignment": "CENTER",
+            "textWrap": true
+          },
+          "type": "LINK",
+          "styles": {
+            "border": {
+              "width": 0,
+              "radius": 0
+            },
+            "colors": {
+              "text": "#FFFFFF",
+              "border": "#1cdbb3",
+              "background": "#1cdbb3"
+            }
+          },
+          "text": "DONATE"
+        }
+      },
+      {
+        "type": "PARAGRAPH",
+        "id": "r6uj",
+        "nodes": [
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "Follow us on social media and subscribe to our newsletter to keep up to date on all of the new and exciting things going on.",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": " ",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "With gratitude and appreciation,",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "\n",
+              "decorations": []
+            }
+          },
+          {
+            "type": "TEXT",
+            "id": "",
+            "nodes": [],
+            "textData": {
+              "text": "The Dove Family",
+              "decorations": []
+            }
+          }
+        ],
+        "paragraphData": {
+          "textStyle": {
+            "textAlignment": "AUTO"
+          },
+          "indentation": 0
+        }
+      }
+    ],
+    "metadata": {
+      "version": 1,
+      "createdTimestamp": "2024-05-15T20:37:13.910Z",
+      "updatedTimestamp": "2024-05-15T20:37:13.910Z",
+      "id": "870fabe8-fe6d-44dd-8d8e-232c19031850"
+    },
+    "documentStyle": {}
+  },
+  "preview": false,
+  "contentId": "63fbf9ecc17118b651bb0146",
+  "mostRecentContributorId": "2aef7e2a-619a-40fb-a67a-eb67b015c36a",
+  "media": {
+    "wixMedia": {
+      "image": {
+        "id": "294108_c01e969beafb4d2f9cc9284724288821~mv2.jpg",
+        "url": "https://static.wixstatic.com/media/294108_c01e969beafb4d2f9cc9284724288821~mv2.jpg",
+        "height": 1024,
+        "width": 1024
+      }
+    },
+    "displayed": true,
+    "custom": false
+  },
+  "hasUnpublishedChanges": true,
+  "translations": [],
+  "customExcerpt": false,
+  "internalCategoryIds": [],
+  "internalRelatedPostIds": []
+}

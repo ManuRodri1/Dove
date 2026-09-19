@@ -9,6 +9,8 @@ import { Action, Photo, SectionHeading, TextLink } from "./ui";
 import Newsletter from "./Newsletter";
 import GroupExperienceInquiryForm from "./GroupExperienceInquiryForm";
 
+import TripadvisorReviews from "./travel/TripadvisorReviews";
+
 export default function TravelWithPurpose({ content, home }: { content: TravelWithPurposeContent; home: HomeContent }) {
   return <>
     <section className="travel-hero section" aria-labelledby="travel-heading">
@@ -137,6 +139,12 @@ export default function TravelWithPurpose({ content, home }: { content: TravelWi
         <Action link={content.individualLink} variant="secondary" />
       </div>
     </section>
+
+    <TripadvisorReviews
+      eyebrow={content.reviews.eyebrow}
+      heading={content.reviews.heading}
+      description={content.reviews.description}
+    />
 
     <section className="travel-faq section" aria-labelledby="travel-faq-heading">
       <div className="container travel-faq-grid">

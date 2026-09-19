@@ -33,7 +33,8 @@ export const links = {
     volunteer: "mailto:operations@doveyouthdevelopment.org",
     groupTravel: "mailto:executivedirector@doveyouthdevelopment.org",
   },
-  stories: "https://www.doveyouthdevelopment.org/blog",
+  stories: (locale: Locale) => `/${locale}/stories`,
+  campaigns: (locale: Locale) => `/${locale}/campaigns`,
   // Linked by the legacy About page; retain the existing policy until replaced.
   privacy: "https://app.termly.io/policy-viewer/policy.html?policyUUID=5366d787-8175-44d5-93cf-a628b5303232",
 } as const;

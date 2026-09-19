@@ -127,6 +127,11 @@ export const travelWithPurposeEs = {
     description: "Si estás planificando tu propia experiencia de voluntariado, la página Volunteer explica cómo es un día en Dove y el proceso individual de solicitud y acuerdo.",
     cta: "Conocer el voluntariado",
   },
+  reviews: {
+    eyebrow: "EXPERIENCIAS DE VIAJEROS",
+    heading: "Conoce la experiencia de quienes han vivido Dove de cerca.",
+    description: "Visitantes y voluntarios han compartido sus experiencias con Dove en Puerto Plata. Conoce sus reseñas en Tripadvisor.",
+  },
   faq: {
     eyebrow: "Preguntas frecuentes",
     heading: "Respuestas para planificar.",

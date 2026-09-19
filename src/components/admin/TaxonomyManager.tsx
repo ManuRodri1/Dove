@@ -1,0 +1,20 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { deleteTaxonomyAction, saveTaxonomyAction, type TaxonomyPayload } from "@/app/admin/taxonomy-actions";
+import type { AdminTaxonomyItem } from "@/lib/cms/admin-queries";
+
+const empty: TaxonomyPayload = { internalKey: "", enName: "", enSlug: "", esName: "", esSlug: "" };
+
+export default function TaxonomyManager({ kind, items }: { kind: "category" | "tag"; items: AdminTaxonomyItem[] }) {
+  const router = useRouter();
+  const [form, setForm] = useState<TaxonomyPayload>(empty);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+  const singular = kind === "category" ? "category" : "tag";
+  const edit = (item: AdminTaxonomyItem) => { const en = item.translations.find((entry) => entry.locale === "en"); const es = item.translations.find((entry) => entry.locale === "es"); setForm({ id: item.id, internalKey: item.internal_key, enName: en?.name ?? "", enSlug: en?.slug ?? "", esName: es?.name ?? "", esSlug: es?.slug ?? "" }); setMessage(""); };
+  const save = async (event: React.FormEvent) => { event.preventDefault(); setSaving(true); const result = await saveTaxonomyAction(kind, form); setSaving(false); if (!result.success) { setMessage(result.error ?? "Save failed."); return; } setMessage(`${singular[0].toUpperCase()}${singular.slice(1)} saved.`); setForm(empty); router.refresh(); };
+  const remove = async (id: string) => { if (!window.confirm(`Delete this ${singular}? It will be removed from linked stories.`)) return; const result = await deleteTaxonomyAction(kind, id); if (!result.success) setMessage(result.error ?? "Delete failed."); router.refresh(); };
+  return <div className="taxonomy-workspace"><section className="taxonomy-list"><header><h2>Existing {kind === "category" ? "categories" : "tags"}</h2><span>{items.length}</span></header>{items.length ? <div>{items.map((item) => { const en = item.translations.find((entry) => entry.locale === "en"); const es = item.translations.find((entry) => entry.locale === "es"); return <article key={item.id}><div><strong>{en?.name ?? item.internal_key}</strong><small>{item.internal_key}{es?.name ? ` · ES: ${es.name}` : ""}</small></div><div><button type="button" onClick={() => edit(item)}>Edit</button><button type="button" onClick={() => remove(item.id)}>Delete</button></div></article>; })}</div> : <div className="admin-empty"><h2>No {kind === "category" ? "categories" : "tags"} yet</h2><p>Create one only when the editorial team has a real need for it.</p></div>}</section><form className="taxonomy-form" onSubmit={save}><p className="admin-kicker">{form.id ? "Edit" : "New"}</p><h2>{form.id ? `Edit ${singular}` : `Create ${singular}`}</h2><label><span>Internal key</span><input value={form.internalKey} onChange={(event) => setForm({ ...form, internalKey: event.target.value })} placeholder="Generated from English name" /></label><fieldset><legend>English</legend><label><span>Name</span><input required value={form.enName} onChange={(event) => setForm({ ...form, enName: event.target.value })} /></label><label><span>Slug</span><input value={form.enSlug} onChange={(event) => setForm({ ...form, enSlug: event.target.value })} placeholder="Generated from name" /></label></fieldset><fieldset><legend>Español <small>optional</small></legend><label><span>Name</span><input value={form.esName} onChange={(event) => setForm({ ...form, esName: event.target.value })} /></label><label><span>Slug</span><input value={form.esSlug} onChange={(event) => setForm({ ...form, esSlug: event.target.value })} placeholder="Generated from name" /></label></fieldset><div className="taxonomy-actions"><button className="admin-primary" disabled={saving} type="submit">{saving ? "Saving…" : `Save ${singular}`}</button>{form.id && <button className="admin-secondary" type="button" onClick={() => setForm(empty)}>Cancel</button>}</div><p className="admin-form-status" role="status">{message}</p></form></div>;
+}

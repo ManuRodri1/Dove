@@ -1,8 +1,18 @@
 import "server-only";
+
 import type { Locale } from "@/i18n/config";
-import { createClient } from "../supabase/server";
-import type { BlockType } from "../supabase/database.types";
+import { createClient } from "@/lib/supabase/server";
+import type { BlockType } from "@/lib/supabase/database.types";
 import type { BlockSettings } from "./blocks/schema";
+
+export interface StoryImage {
+  url: string;
+  alt: string;
+  width: number | null;
+  height: number | null;
+  focalX: number | null;
+  focalY: number | null;
+}
 
 export interface PublicStorySummary {
   id: string;
@@ -12,14 +22,7 @@ export interface PublicStorySummary {
   excerpt: string;
   authorName: string | null;
   publishedAt: string;
-  coverImage: {
-    url: string;
-    alt: string;
-    width: number | null;
-    height: number | null;
-    focalX: number | null;
-    focalY: number | null;
-  } | null;
+  coverImage: StoryImage | null;
   categories: Array<{ name: string; slug: string }>;
   tags: Array<{ name: string; slug: string }>;
   featuredHome: boolean;
@@ -32,461 +35,233 @@ export interface PublicStoryBlock {
   blockType: BlockType;
   sortOrder: number;
   data: Record<string, unknown>;
-  settings: BlockSettings;
+  settings: BlockSettings & Record<string, unknown>;
+  visible?: boolean;
 }
 
 export interface PublicStoryDetail extends PublicStorySummary {
   seoTitle: string | null;
   seoDescription: string | null;
   blocks: PublicStoryBlock[];
+  readingMinutes: number;
 }
 
-/**
- * Helper to check if Supabase is configured in the current environment
- */
-function isSupabaseConfigured(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
-}
-
-/**
- * Fetch featured stories for the Home page or Stories index
- */
-export async function getFeaturedStories(
-  locale: Locale,
-  target: "home" | "stories" = "home",
-  limit = 3
-): Promise<PublicStorySummary[]> {
-  if (!isSupabaseConfigured()) {
-    return [];
-  }
-
-  try {
-    const supabase = await createClient();
-    const now = new Date().toISOString();
-
-    let query = supabase
-      .from("stories")
-      .select(`
-        id,
-        published_at,
-        author_name,
-        featured_home,
-        featured_stories,
-        cover_media:media_assets!cover_media_id (
-          url,
-          width,
-          height,
-          focal_x,
-          focal_y
-        ),
-        translations:story_translations!inner (
-          slug,
-          title,
-          excerpt,
-          locale,
-          publication_status
-        ),
-        story_categories (
-          category:categories (
-            translations:category_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        ),
-        story_tags (
-          tag:tags (
-            translations:tag_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        )
-      `)
-      .eq("status", "published")
-      .lte("published_at", now)
-      .eq("translations.locale", locale)
-      .eq("translations.publication_status", "published")
-      .order("published_at", { ascending: false })
-      .limit(limit);
-
-    if (target === "home") {
-      query = query.eq("featured_home", true);
-    } else {
-      query = query.eq("featured_stories", true);
-    }
-
-    const { data, error } = await query;
-    if (error || !data) {
-      return [];
-    }
-
-    return mapStoriesSummary(data, locale);
-  } catch {
-    return [];
-  }
-}
-
-/**
- * Query paginated stories for a given locale with optional category filtering
- */
-export async function getStories(params: {
+interface RawTranslation {
+  id?: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
   locale: Locale;
-  limit?: number;
-  offset?: number;
-  categorySlug?: string;
-}): Promise<{ items: PublicStorySummary[]; total: number }> {
-  if (!isSupabaseConfigured()) {
-    return { items: [], total: 0 };
-  }
+  publication_status: string;
+  seo_title?: string | null;
+  seo_description?: string | null;
+  story_blocks?: RawBlock[];
+}
 
+interface RawBlock {
+  id: string;
+  block_type: BlockType;
+  sort_order: number;
+  data: Record<string, unknown> | null;
+  settings: (BlockSettings & Record<string, unknown>) | null;
+  visible: boolean;
+}
+
+interface RawMedia {
+  url: string;
+  width: number | null;
+  height: number | null;
+  focal_x: number | null;
+  focal_y: number | null;
+}
+
+interface RawTaxonomyTranslation {
+  name: string;
+  slug: string;
+  locale: Locale;
+}
+
+interface RawTaxonomyRelation {
+  translations?: RawTaxonomyTranslation[];
+}
+
+interface RawTaxonomyJoin {
+  category?: RawTaxonomyRelation | RawTaxonomyRelation[] | null;
+  tag?: RawTaxonomyRelation | RawTaxonomyRelation[] | null;
+}
+
+interface RawStoryRecord {
+  id: string;
+  published_at: string;
+  author_name: string | null;
+  featured_home: boolean;
+  featured_stories: boolean;
+  cover_media: RawMedia | RawMedia[] | null;
+  translations: RawTranslation | RawTranslation[] | null;
+  story_categories: RawTaxonomyJoin[] | null;
+  story_tags: RawTaxonomyJoin[] | null;
+}
+
+const configured = () => Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+const selection = `id,published_at,author_name,featured_home,featured_stories,cover_media:media_assets!cover_media_id(url,width,height,focal_x,focal_y),translations:story_translations!inner(slug,title,excerpt,locale,publication_status),story_categories(category:categories(translations:category_translations(name,slug,locale))),story_tags(tag:tags(translations:tag_translations(name,slug,locale)))`;
+const detailSelection = `id,published_at,author_name,featured_home,featured_stories,cover_media:media_assets!cover_media_id(url,width,height,focal_x,focal_y),translations:story_translations!inner(id,slug,title,excerpt,seo_title,seo_description,locale,publication_status,story_blocks(id,block_type,sort_order,data,settings,visible)),story_categories(category:categories(translations:category_translations(name,slug,locale))),story_tags(tag:tags(translations:tag_translations(name,slug,locale)))`;
+
+function first<T>(value: T | T[] | null | undefined): T | null {
+  return Array.isArray(value) ? value[0] ?? null : value ?? null;
+}
+
+function taxonomyForLocale(rows: RawTaxonomyJoin[] | null, key: "category" | "tag", locale: Locale) {
+  return (rows ?? []).flatMap((row) => {
+    const relation = first(row[key]);
+    const translation = relation?.translations?.find((item) => item.locale === locale);
+    return translation ? [{ name: translation.name, slug: translation.slug }] : [];
+  });
+}
+
+function mapStories(records: RawStoryRecord[], locale: Locale): PublicStorySummary[] {
+  return records.flatMap((record) => {
+    const translation = first(record.translations);
+    if (!translation) return [];
+    const cover = first(record.cover_media);
+    return [{
+      id: record.id,
+      slug: translation.slug,
+      locale,
+      title: translation.title,
+      excerpt: translation.excerpt ?? "",
+      authorName: record.author_name ?? null,
+      publishedAt: record.published_at,
+      coverImage: cover ? {
+        url: cover.url,
+        alt: translation.title,
+        width: cover.width ?? null,
+        height: cover.height ?? null,
+        focalX: cover.focal_x ?? null,
+        focalY: cover.focal_y ?? null,
+      } : null,
+      categories: taxonomyForLocale(record.story_categories, "category", locale),
+      tags: taxonomyForLocale(record.story_tags, "tag", locale),
+      featuredHome: record.featured_home === true,
+      featuredStories: record.featured_stories === true,
+      href: `/${locale}/stories/${translation.slug}`,
+    }];
+  });
+}
+
+export function calculateReadingMinutes(blocks: PublicStoryBlock[]) {
+  const words = blocks.map((block) => JSON.stringify(block.data).replace(/<[^>]*>/g, " ")).join(" ").trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 220));
+}
+
+export function getRenderableBlocks(blocks: PublicStoryBlock[]) {
+  return blocks.filter((block) => block.visible !== false).sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+export async function getStories(params: { locale: Locale; limit?: number; offset?: number; query?: string; categorySlug?: string; featuredHome?: boolean; featuredStories?: boolean; excludeId?: string }) {
+  if (!configured()) return { items: [], total: 0 };
   try {
-    const supabase = await createClient();
+    const db = await createClient();
     const now = new Date().toISOString();
-    const limit = params.limit ?? 10;
-    const offset = params.offset ?? 0;
-
-    let query = supabase
-      .from("stories")
-      .select(`
-        id,
-        published_at,
-        author_name,
-        featured_home,
-        featured_stories,
-        cover_media:media_assets!cover_media_id (
-          url,
-          width,
-          height,
-          focal_x,
-          focal_y
-        ),
-        translations:story_translations!inner (
-          slug,
-          title,
-          excerpt,
-          locale,
-          publication_status
-        ),
-        story_categories (
-          category:categories (
-            translations:category_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        ),
-        story_tags (
-          tag:tags (
-            translations:tag_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        )
-      `, { count: "exact" })
+    let query = db.from("stories").select(selection, { count: "exact" })
       .eq("status", "published")
       .lte("published_at", now)
       .eq("translations.locale", params.locale)
-      .eq("translations.publication_status", "published")
+      .eq("translations.publication_status", "published");
+    if (params.featuredHome !== undefined) query = query.eq("featured_home", params.featuredHome);
+    if (params.featuredStories !== undefined) query = query.eq("featured_stories", params.featuredStories);
+    if (params.excludeId) query = query.neq("id", params.excludeId);
+    if (params.query?.trim()) {
+      query = query.or(`title.ilike.%${params.query.trim()}%,excerpt.ilike.%${params.query.trim()}%`, { foreignTable: "story_translations" });
+    }
+    const { data, count, error } = await query
       .order("published_at", { ascending: false })
-      .range(offset, offset + limit - 1);
-
-    if (params.categorySlug) {
-      // Filter by category slug if provided
-      query = query.eq("story_categories.category.translations.slug", params.categorySlug);
-    }
-
-    const { data, count, error } = await query;
-    if (error || !data) {
-      return { items: [], total: 0 };
-    }
-
-    return {
-      items: mapStoriesSummary(data, params.locale),
-      total: count ?? data.length,
-    };
+      .range(params.offset ?? 0, (params.offset ?? 0) + (params.limit ?? 9) - 1);
+    if (error || !data) return { items: [], total: 0 };
+    return { items: mapStories(data as unknown as RawStoryRecord[], params.locale), total: count ?? data.length };
   } catch {
     return { items: [], total: 0 };
   }
 }
 
-/**
- * Fetch a single story with full ordered content blocks by slug
- */
-export async function getStoryBySlug(params: {
-  locale: Locale;
-  slug: string;
-}): Promise<PublicStoryDetail | null> {
-  if (!isSupabaseConfigured()) {
-    return null;
-  }
+export async function getFeaturedStories(locale: Locale, target: "home" | "stories" = "home", limit = 3) {
+  const result = target === "home"
+    ? await getStories({ locale, limit, featuredHome: true })
+    : await getStories({ locale, limit, featuredStories: true });
+  return result.items;
+}
 
+export async function getStoryBySlug(params: { locale: Locale; slug: string }): Promise<PublicStoryDetail | null> {
+  if (!configured()) return null;
   try {
-    const supabase = await createClient();
-    const now = new Date().toISOString();
-
-    const { data, error } = await supabase
-      .from("stories")
-      .select(`
-        id,
-        published_at,
-        author_name,
-        featured_home,
-        featured_stories,
-        cover_media:media_assets!cover_media_id (
-          url,
-          width,
-          height,
-          focal_x,
-          focal_y
-        ),
-        translations:story_translations!inner (
-          id,
-          slug,
-          title,
-          excerpt,
-          seo_title,
-          seo_description,
-          locale,
-          publication_status,
-          story_blocks (
-            id,
-            block_type,
-            sort_order,
-            data,
-            settings,
-            visible
-          )
-        ),
-        story_categories (
-          category:categories (
-            translations:category_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        ),
-        story_tags (
-          tag:tags (
-            translations:tag_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        )
-      `)
+    const db = await createClient();
+    const { data, error } = await db.from("stories").select(detailSelection)
       .eq("status", "published")
-      .lte("published_at", now)
+      .lte("published_at", new Date().toISOString())
       .eq("translations.locale", params.locale)
       .eq("translations.slug", params.slug)
       .eq("translations.publication_status", "published")
       .single();
-
-    if (error || !data) {
-      return null;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rawData = data as any;
-    const translation = Array.isArray(rawData.translations) ? rawData.translations[0] : rawData.translations;
-    if (!translation) return null;
-
-    const summary = mapStoriesSummary([data], params.locale)[0];
-    if (!summary) return null;
-
-    // Filter and sort visible blocks by sort_order
-    const rawBlocks = (translation.story_blocks as Array<{
-      id: string;
-      block_type: BlockType;
-      sort_order: number;
-      data: Record<string, unknown>;
-      settings: BlockSettings;
-      visible: boolean;
-    }>) || [];
-
-    const blocks: PublicStoryBlock[] = rawBlocks
-      .filter((b) => b.visible)
-      .sort((a, b) => a.sort_order - b.sort_order)
-      .map((b) => ({
-        id: b.id,
-        blockType: b.block_type,
-        sortOrder: b.sort_order,
-        data: b.data,
-        settings: b.settings ?? {},
-      }));
-
+    if (error || !data) return null;
+    const record = data as unknown as RawStoryRecord;
+    const summary = mapStories([record], params.locale)[0];
+    const translation = first(record.translations);
+    if (!summary || !translation) return null;
+    const blocks = getRenderableBlocks((translation.story_blocks ?? []).map((block) => ({
+      id: block.id,
+      blockType: block.block_type,
+      sortOrder: block.sort_order,
+      data: block.data ?? {},
+      settings: block.settings ?? {},
+      visible: block.visible,
+    })));
     return {
       ...summary,
-      seoTitle: translation.seo_title,
-      seoDescription: translation.seo_description,
+      seoTitle: translation.seo_title ?? null,
+      seoDescription: translation.seo_description ?? null,
       blocks,
+      readingMinutes: calculateReadingMinutes(blocks),
     };
   } catch {
     return null;
   }
 }
 
-/**
- * Full text / keyword search across published stories
- */
-export async function searchStories(params: {
-  locale: Locale;
-  query: string;
-  limit?: number;
-}): Promise<PublicStorySummary[]> {
-  if (!isSupabaseConfigured() || !params.query.trim()) {
-    return [];
-  }
+export async function searchStories(params: { locale: Locale; query: string; limit?: number }) {
+  return (await getStories({ ...params, offset: 0 })).items;
+}
 
+export async function getStoryCategories(locale: Locale) {
+  if (!configured()) return [];
   try {
-    const supabase = await createClient();
-    const now = new Date().toISOString();
-    const limit = params.limit ?? 10;
-    const cleanQuery = `%${params.query.trim()}%`;
-
-    const { data, error } = await supabase
-      .from("stories")
-      .select(`
-        id,
-        published_at,
-        author_name,
-        featured_home,
-        featured_stories,
-        cover_media:media_assets!cover_media_id (
-          url,
-          width,
-          height,
-          focal_x,
-          focal_y
-        ),
-        translations:story_translations!inner (
-          slug,
-          title,
-          excerpt,
-          locale,
-          publication_status
-        ),
-        story_categories (
-          category:categories (
-            translations:category_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        ),
-        story_tags (
-          tag:tags (
-            translations:tag_translations (
-              name,
-              slug,
-              locale
-            )
-          )
-        )
-      `)
-      .eq("status", "published")
-      .lte("published_at", now)
-      .eq("translations.locale", params.locale)
-      .eq("translations.publication_status", "published")
-      .or(`title.ilike.${cleanQuery},excerpt.ilike.${cleanQuery}`, {
-        foreignTable: "story_translations",
-      })
-      .order("published_at", { ascending: false })
-      .limit(limit);
-
-    if (error || !data) {
-      return [];
-    }
-
-    return mapStoriesSummary(data, params.locale);
+    const db = await createClient();
+    const { data } = await db.from("category_translations").select("name,slug,locale").eq("locale", locale).order("name");
+    return data ?? [];
   } catch {
     return [];
   }
 }
 
-// ==============================================================================
-// INTERNAL MAPPING HELPERS
-// ==============================================================================
+export async function getPublicStorySlugs() {
+  if (!configured()) return [];
+  try {
+    const db = await createClient();
+    const { data } = await db.from("story_translations").select("slug,locale,publication_status,story:stories!inner(status,published_at)")
+      .eq("publication_status", "published")
+      .eq("story.status", "published")
+      .lte("story.published_at", new Date().toISOString());
+    return (data ?? []).map((item) => ({ slug: item.slug, locale: item.locale as Locale }));
+  } catch {
+    return [];
+  }
+}
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function mapStoriesSummary(records: any[], locale: Locale): PublicStorySummary[] {
-  return records
-    .map((record) => {
-      const translation = Array.isArray(record.translations)
-        ? record.translations[0]
-        : record.translations;
-
-      if (!translation) return null;
-
-      const cover = record.cover_media;
-      const categories: Array<{ name: string; slug: string }> = [];
-      const tags: Array<{ name: string; slug: string }> = [];
-
-      // Extract translated categories
-      if (Array.isArray(record.story_categories)) {
-        for (const sc of record.story_categories) {
-          const trans = sc.category?.translations;
-          const match = Array.isArray(trans)
-            ? trans.find((t: { locale: string }) => t.locale === locale)
-            : trans?.locale === locale
-            ? trans
-            : null;
-          if (match) {
-            categories.push({ name: match.name, slug: match.slug });
-          }
-        }
-      }
-
-      // Extract translated tags
-      if (Array.isArray(record.story_tags)) {
-        for (const st of record.story_tags) {
-          const trans = st.tag?.translations;
-          const match = Array.isArray(trans)
-            ? trans.find((t: { locale: string }) => t.locale === locale)
-            : trans?.locale === locale
-            ? trans
-            : null;
-          if (match) {
-            tags.push({ name: match.name, slug: match.slug });
-          }
-        }
-      }
-
-      return {
-        id: record.id,
-        slug: translation.slug,
-        locale,
-        title: translation.title,
-        excerpt: translation.excerpt || "",
-        authorName: record.author_name || null,
-        publishedAt: record.published_at,
-        coverImage: cover
-          ? {
-              url: cover.url,
-              alt: translation.title,
-              width: (cover.width as number | null) ?? null,
-              height: (cover.height as number | null) ?? null,
-              focalX: (cover.focal_x as number | null) ?? null,
-              focalY: (cover.focal_y as number | null) ?? null,
-            }
-          : null,
-        categories,
-        tags,
-        featuredHome: record.featured_home === true,
-        featuredStories: record.featured_stories === true,
-        href: `/${locale}/stories/${translation.slug}`,
-      };
-    })
-    .filter((item): item is PublicStorySummary => item !== null);
+export async function getRedirectBySourcePath(source: string) {
+  if (!configured()) return null;
+  try {
+    const db = await createClient();
+    const { data } = await db.from("redirects").select("destination_path,status_code").eq("source_path", source.toLowerCase()).eq("active", true).maybeSingle();
+    return data;
+  } catch {
+    return null;
+  }
 }

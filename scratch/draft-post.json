@@ -1,0 +1,46 @@
+{
+  "draftPost": {
+    "id": "7af6baa4-bc0e-46e3-b33d-30df7e4d08d8",
+    "title": "Greetings from the Dominican Republic!",
+    "featured": false,
+    "categoryIds": [],
+    "memberId": "2aef7e2a-619a-40fb-a67a-eb67b015c36a",
+    "hashtags": [],
+    "commentingEnabled": true,
+    "minutesToRead": 2,
+    "tagIds": [],
+    "relatedPostIds": [],
+    "pricingPlanIds": [],
+    "language": "en",
+    "changeOrigin": "NEW_EDIT_SESSION",
+    "contentId": "63fbf9ecc17118b651bb0146",
+    "editingSessionId": "ed4cf81f-75a7-4ced-807c-14292b2d4582",
+    "status": "PUBLISHED",
+    "mostRecentContributorId": "2aef7e2a-619a-40fb-a67a-eb67b015c36a",
+    "hasUnpublishedChanges": true,
+    "editedDate": "2023-02-27T00:31:40Z",
+    "firstPublishedDate": "2023-02-27T00:31:16Z",
+    "seoData": {
+      "tags": []
+    },
+    "slugs": [
+      "greetings-from-the-dominican-republic"
+    ],
+    "createdDate": "2023-02-27T00:21:25.263Z",
+    "seoSlug": "greetings-from-the-dominican-republic",
+    "media": {
+      "wixMedia": {
+        "image": {
+          "id": "294108_c01e969beafb4d2f9cc9284724288821~mv2.jpg",
+          "url": "https://static.wixstatic.com/media/294108_c01e969beafb4d2f9cc9284724288821~mv2.jpg",
+          "height": 1024,
+          "width": 1024
+        }
+      },
+      "displayed": true,
+      "custom": false
+    },
+    "previewTextParagraph": 1,
+    "translations": []
+  }
+}

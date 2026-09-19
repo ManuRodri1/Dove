@@ -37,7 +37,7 @@ export function getWhatWeDo(locale: Locale) {
         image: media[index] ? { ...media[index]!, alt: item.imageAlt ?? media[index]!.alt } : null,
       })),
     },
-    outcomeLink: { label: copy.outcome.cta, href: links.stories },
+    outcomeLink: { label: copy.outcome.cta, href: links.stories(locale) },
     closingLinks: {
       primary: { label: copy.closing.primary, href: links.donate(locale) },
       secondary: { label: copy.closing.secondary, href: links.volunteer.page(locale) },

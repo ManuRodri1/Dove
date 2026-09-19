@@ -1,162 +1,43 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { getStaffSession } from "@/lib/cms/admin-stories";
+import { getAdminDashboard } from "@/lib/cms/admin-queries";
+
+function formatDate(value: string | null) {
+  if (!value) return "Not published";
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(value));
+}
 
 export default async function AdminDashboardPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/admin/login");
-  }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("id, display_name, role, active")
-    .eq("id", user.id)
-    .single();
-
-  if (!profile || !profile.active) {
-    return (
-      <div style={{ maxWidth: "600px", margin: "4rem auto", textAlign: "center" }}>
-        <h2>Access Denied</h2>
-        <p>Your account is not registered as an active staff member in the Dove CMS.</p>
-        <p>Contact an administrator for access.</p>
-      </div>
-    );
-  }
-
-  // Query counts for overview
-  const { count: storiesCount } = await supabase
-    .from("stories")
-    .select("*", { count: "exact", head: true });
-
-  const { count: publishedCount } = await supabase
-    .from("stories")
-    .select("*", { count: "exact", head: true })
-    .eq("status", "published");
-
-  const { count: wixImportsCount } = await supabase
-    .from("wix_import_map")
-    .select("*", { count: "exact", head: true });
-
-  const { count: mediaCount } = await supabase
-    .from("media_assets")
-    .select("*", { count: "exact", head: true });
+  const staff = await getStaffSession();
+  if (!staff) redirect("/admin/login");
+  const dashboard = await getAdminDashboard();
+  const metrics = [
+    ["Total stories", dashboard.counts.total],
+    ["Published", dashboard.counts.published],
+    ["Drafts", dashboard.counts.drafts],
+    ["Scheduled", dashboard.counts.scheduled],
+    ["Media assets", dashboard.counts.media],
+  ] as const;
 
   return (
-    <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-      <div style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.875rem", color: "#005463", margin: "0 0 0.5rem" }}>
-          Welcome, {profile.display_name}
-        </h1>
-        <p style={{ color: "#666", margin: 0 }}>
-          Dove CMS Backend Foundation — Phase 1 Verification Dashboard
-        </p>
-      </div>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1.5rem",
-          marginBottom: "2.5rem",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#fff",
-            padding: "1.5rem",
-            borderRadius: "12px",
-            border: "1px solid var(--color-rule, #e2ded5)",
-          }}
-        >
-          <div style={{ fontSize: "0.875rem", color: "#666", marginBottom: "0.5rem" }}>
-            Total Stories
-          </div>
-          <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#005463" }}>
-            {storiesCount ?? 0}
-          </div>
-        </div>
-
-        <div
-          style={{
-            backgroundColor: "#fff",
-            padding: "1.5rem",
-            borderRadius: "12px",
-            border: "1px solid var(--color-rule, #e2ded5)",
-          }}
-        >
-          <div style={{ fontSize: "0.875rem", color: "#666", marginBottom: "0.5rem" }}>
-            Published Stories
-          </div>
-          <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#005463" }}>
-            {publishedCount ?? 0}
-          </div>
-        </div>
-
-        <div
-          style={{
-            backgroundColor: "#fff",
-            padding: "1.5rem",
-            borderRadius: "12px",
-            border: "1px solid var(--color-rule, #e2ded5)",
-          }}
-        >
-          <div style={{ fontSize: "0.875rem", color: "#666", marginBottom: "0.5rem" }}>
-            Media Assets
-          </div>
-          <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#005463" }}>
-            {mediaCount ?? 0}
-          </div>
-        </div>
-
-        <div
-          style={{
-            backgroundColor: "#fff",
-            padding: "1.5rem",
-            borderRadius: "12px",
-            border: "1px solid var(--color-rule, #e2ded5)",
-          }}
-        >
-          <div style={{ fontSize: "0.875rem", color: "#666", marginBottom: "0.5rem" }}>
-            Migrated from Wix
-          </div>
-          <div style={{ fontSize: "2rem", fontWeight: "bold", color: "#e68337" }}>
-            {wixImportsCount ?? 0}
-          </div>
-        </div>
-      </div>
-
-      <div
-        style={{
-          backgroundColor: "#fff",
-          padding: "2rem",
-          borderRadius: "12px",
-          border: "1px solid var(--color-rule, #e2ded5)",
-        }}
-      >
-        <h2 style={{ fontSize: "1.25rem", margin: "0 0 1rem", color: "#005463" }}>
-          Phase 1 Architecture Status
-        </h2>
-        <ul style={{ lineHeight: 1.8, color: "#444" }}>
-          <li>
-            <strong>Authentication:</strong> Active via Supabase Auth. Session validated server-side.
-          </li>
-          <li>
-            <strong>Authorization / RBAC:</strong> Profile role verified as{" "}
-            <code>{profile.role}</code>.
-          </li>
-          <li>
-            <strong>Data Layer:</strong> Structured content block schemas, multilingual EN/ES
-            isolation, and strict RLS policies enabled.
-          </li>
-          <li>
-            <strong>Visual CMS Editor:</strong> Scheduled for Backend Phase 2 after backend
-            foundations and Wix migration dry run are verified.
-          </li>
-        </ul>
+    <div className="admin-page">
+      <header className="admin-page-head">
+        <div><p className="admin-kicker">Editorial overview</p><h1>Good to see you, {staff.displayName}.</h1><p>Keep Dove&apos;s stories current, clear, and ready to publish.</p></div>
+        <Link className="admin-primary" href="/admin/stories/new">New story</Link>
+      </header>
+      <section className="admin-metrics" aria-label="Content totals">
+        {metrics.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}
+      </section>
+      <div className="admin-dashboard-columns">
+        <section className="admin-ledger">
+          <header><div><p className="admin-kicker">Published</p><h2>Recent stories</h2></div><Link href="/admin/stories?status=published">View all</Link></header>
+          {dashboard.recentStories.length ? <ol>{dashboard.recentStories.map((story) => <li key={story.id}><Link href={`/admin/stories/${story.id}`}>{story.title}</Link><span>{formatDate(story.publishedAt)}</span></li>)}</ol> : <p className="admin-empty-inline">No published stories yet.</p>}
+        </section>
+        <section className="admin-ledger">
+          <header><div><p className="admin-kicker">Activity</p><h2>Recently updated</h2></div><Link href="/admin/stories?sort=updated">View all</Link></header>
+          {dashboard.recentlyUpdated.length ? <ol>{dashboard.recentlyUpdated.map((story) => <li key={story.id}><Link href={`/admin/stories/${story.id}`}>{story.title}</Link><span>{formatDate(story.updatedAt)} · {story.status}</span></li>)}</ol> : <p className="admin-empty-inline">No recent changes.</p>}
+        </section>
       </div>
     </div>
   );

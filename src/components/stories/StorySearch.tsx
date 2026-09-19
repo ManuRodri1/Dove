@@ -1,0 +1,4 @@
+"use client";
+import { useEffect,useState } from "react";
+import { usePathname,useRouter,useSearchParams } from "next/navigation";
+export default function StorySearch({label,placeholder,clear}:{label:string;placeholder:string;clear:string}){const params=useSearchParams(),path=usePathname(),router=useRouter();const [value,setValue]=useState(params.get("q")||"");useEffect(()=>{const id=setTimeout(()=>{const next=new URLSearchParams(params.toString());if(value.trim())next.set("q",value.trim());else next.delete("q");next.delete("page");router.replace(`${path}?${next.toString()}`,{scroll:false})},350);return()=>clearTimeout(id)},[value,path,router,params]);return <div className="story-search"><label htmlFor="story-search">{label}</label><div><input id="story-search" type="search" value={value} placeholder={placeholder} onChange={e=>setValue(e.target.value)}/>{value&&<button type="button" onClick={()=>setValue("")}>{clear}</button>}</div></div>}
