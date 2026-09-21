@@ -30,7 +30,6 @@ export default function MediaPicker({
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const fileInput = useRef<HTMLInputElement>(null);
-  const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<"existing" | "upload">("existing");
   const [query, setQuery] = useState("");
   const [extraAssets, setExtraAssets] = useState<AdminMediaAsset[]>([]);
@@ -61,26 +60,25 @@ export default function MediaPicker({
 
   useEffect(() => {
     const node = dialog.current;
-    if (!node) return;
-    if (open && !node.open) {
-      node.showModal();
-    } else if (!open && node.open) {
-      node.close();
-    }
     return () => {
-      if (node.open) {
+      if (node?.open) {
         node.close();
       }
     };
-  }, [open]);
+  }, []);
 
-  const handleClose = () => {
-    setOpen(false);
-    if (dialog.current?.open) {
-      dialog.current.close();
+  const handleOpen = () => {
+    const node = dialog.current;
+    if (node && !node.open) {
+      node.showModal();
     }
+  };
+
+  const handleDialogClosed = () => {
     setUploadStatus("");
   };
+
+  const handleClose = () => dialog.current?.close();
 
   const handleDialogClick = (event: React.MouseEvent<HTMLDialogElement>) => {
     const node = dialog.current;
@@ -185,7 +183,7 @@ export default function MediaPicker({
           <Image src={selected.url} alt="" fill sizes="88px" />
         </div>
       )}
-      <button className="admin-secondary" type="button" onClick={() => setOpen(true)}>
+      <button className="admin-secondary" type="button" onClick={handleOpen}>
         {selected ? "Change image" : label}
       </button>
 
@@ -193,7 +191,7 @@ export default function MediaPicker({
         ref={dialog}
         className="media-picker-dialog"
         onClick={handleDialogClick}
-        onClose={handleClose}
+        onClose={handleDialogClosed}
       >
         <header>
           <div>

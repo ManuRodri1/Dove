@@ -26,14 +26,17 @@ export default function AdminShell({
     <div className="admin-root">
       <aside className="admin-sidebar" aria-label="CMS navigation">
         <Link className="admin-brand" href="/admin" aria-label="Dove CMS dashboard">
-          <Image
-            src={doveMedia.logo.main.src}
-            alt={doveMedia.logo.main.alt}
-            width={160}
-            height={36}
-            style={{ width: "auto", height: "30px", objectFit: "contain" }}
-            priority
-          />
+          <span className="admin-brand-mark" aria-hidden="true">
+            <Image
+              src={doveMedia.logo.mark.src}
+              alt=""
+              width={34}
+              height={34}
+              style={{ width: "34px", height: "34px", objectFit: "contain" }}
+              priority
+            />
+          </span>
+          <span className="admin-brand-copy"><strong>Dove</strong><small>Youth Development</small></span>
           <span className="admin-brand-tag">CMS</span>
         </Link>
         <nav className="admin-nav">
@@ -50,13 +53,7 @@ export default function AdminShell({
       <div className="admin-stage">
         <header className="admin-topbar">
           <Link className="admin-mobile-brand" href="/admin" aria-label="Dove CMS dashboard">
-            <Image
-              src={doveMedia.logo.main.src}
-              alt={doveMedia.logo.main.alt}
-              width={140}
-              height={32}
-              style={{ width: "auto", height: "24px", objectFit: "contain" }}
-            />
+            <span className="admin-mobile-wordmark">Dove</span>
             <span className="admin-brand-tag">CMS</span>
           </Link>
           <div className="admin-user">

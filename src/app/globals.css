@@ -2837,3 +2837,5 @@ button:active {
 @media (prefers-reduced-motion: reduce) {
   .team-hero-media iframe { transition-duration: var(--dur-micro); }
 }
+
+.contact-page .page-shell{width:min(calc(100% - var(--space-gutter) * 2),var(--container));margin-inline:auto}.contact-page .section--paper{background:var(--color-paper)}
