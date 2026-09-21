@@ -28,6 +28,7 @@ export default function VolunteerApplicationForm({ content }: { content: Volunte
       acceptedRelease: data.get("acceptedRelease") === "on",
       locale: content.locale,
       releaseVersion: VOLUNTEER_RELEASE_VERSION,
+      honeypot: String(data.get("honeypot") ?? ""),
     };
     const nextErrors = validateVolunteerApplication(input);
     setErrors(nextErrors);
@@ -51,6 +52,7 @@ export default function VolunteerApplicationForm({ content }: { content: Volunte
   return <form className="volunteer-form" onSubmit={submit} noValidate aria-describedby="volunteer-form-intro volunteer-form-status">
     <input type="hidden" name="locale" value={content.locale} />
     <input type="hidden" name="releaseVersion" value={VOLUNTEER_RELEASE_VERSION} />
+    <label className="sr-only" aria-hidden="true">Leave this field blank<input name="honeypot" tabIndex={-1} autoComplete="off" /></label>
     <div className="volunteer-fields">
       <div className="field field--wide">
         <label htmlFor="fullName">{copy.fields.fullName}</label>

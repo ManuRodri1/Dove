@@ -84,7 +84,7 @@ export const partnershipsEn = {
     submit: "Send partnership inquiry",
     busy: "Sending…",
     success: "Thank You — Let’s Start the Conversation. We’ve received your partnership inquiry. A member of the Dove team will follow up to learn more.",
-    unavailable: "Online submission is not available yet. Your information has not been saved. Please contact Dove by email instead.",
+    unavailable: "We could not deliver your inquiry by email. It has been saved for the Dove team to follow up; you may also contact Dove directly.",
     invalid: "Please review the highlighted fields.",
     fallback: "Email the Executive Director",
     errors: { fullName: "Enter your full name.", workEmail: "Enter a valid work email.", organizationName: "Enter your organization or company name.", interest: "Choose a partnership interest.", message: "Tell us what you would like to explore." },

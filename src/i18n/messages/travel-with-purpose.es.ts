@@ -111,7 +111,7 @@ export const travelWithPurposeEs = {
     submit: "Enviar consulta grupal",
     busy: "Enviando…",
     success: "Gracias, recibimos la consulta de tu grupo. El equipo de Dove la revisará y se pondrá en contacto para conversar sobre la experiencia.",
-    unavailable: "El envío en línea todavía no está configurado. Tus datos no se enviaron ni se guardaron. Mantén el formulario abierto y comunícate con la directora ejecutiva.",
+    unavailable: "No pudimos entregar tu consulta por correo. Se guardó para que el equipo de Dove pueda dar seguimiento; también puedes contactar directamente a la directora ejecutiva.",
     invalid: "Corrige los campos señalados antes de enviar la consulta.",
     contact: "Escribir a la directora ejecutiva",
     errors: {

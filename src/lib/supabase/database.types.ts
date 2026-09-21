@@ -32,6 +32,69 @@ export type BlockType =
 export interface Database {
   dove: {
     Tables: {
+      form_submissions: {
+        Row: {
+          id: string;
+          form_type: "contact" | "volunteer" | "travel" | "partnership";
+          status: "received" | "delivered" | "delivery_failed" | "spam" | "archived";
+          recipient: string;
+          name: string;
+          email: string;
+          phone: string | null;
+          organization: string | null;
+          reason: string | null;
+          message: string | null;
+          locale: "en" | "es";
+          payload: Json;
+          delivery_error: string | null;
+          provider_message_id: string | null;
+          received_at: string;
+          delivered_at: string | null;
+          archived_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          form_type: "contact" | "volunteer" | "travel" | "partnership";
+          status?: "received" | "delivered" | "delivery_failed" | "spam" | "archived";
+          recipient: string;
+          name: string;
+          email: string;
+          phone?: string | null;
+          organization?: string | null;
+          reason?: string | null;
+          message?: string | null;
+          locale: "en" | "es";
+          payload?: Json;
+          delivery_error?: string | null;
+          provider_message_id?: string | null;
+          received_at?: string;
+          delivered_at?: string | null;
+          archived_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          form_type?: "contact" | "volunteer" | "travel" | "partnership";
+          status?: "received" | "delivered" | "delivery_failed" | "spam" | "archived";
+          recipient?: string;
+          name?: string;
+          email?: string;
+          phone?: string | null;
+          organization?: string | null;
+          reason?: string | null;
+          message?: string | null;
+          locale?: "en" | "es";
+          payload?: Json;
+          delivery_error?: string | null;
+          provider_message_id?: string | null;
+          received_at?: string;
+          delivered_at?: string | null;
+          archived_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       profiles: {
         Row: {
           id: string;

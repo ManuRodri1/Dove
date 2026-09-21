@@ -91,7 +91,7 @@ export const volunteerEn = {
     acceptance: "I have read and agree to the Volunteer Release and Assumption of Risk above. Typing my name in this application serves as my electronic signature.",
     submit: "Submit Volunteer Application",
     busy: "Submitting…",
-    unavailable: "Online delivery is not configured yet. Your information has not been sent or stored. Please keep the form open and contact the operations team.",
+    unavailable: "We could not deliver your application by email. It has been saved for the operations team to follow up; you may also contact them directly.",
     invalid: "Please correct the marked fields and accept the release before submitting.",
     success: "Your application was received. The Dove team will follow up with you.",
     contact: "Email the operations team",

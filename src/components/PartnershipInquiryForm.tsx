@@ -35,6 +35,7 @@ export default function PartnershipInquiryForm({ content }: { content: Partnersh
       message: String(data.get("message") ?? ""),
       referral: String(data.get("referral") ?? ""),
       locale: content.locale,
+      honeypot: String(data.get("honeypot") ?? ""),
     };
     const nextErrors = validatePartnershipInquiry(input);
     setErrors(nextErrors);
@@ -55,6 +56,7 @@ export default function PartnershipInquiryForm({ content }: { content: Partnersh
   const required = <span aria-hidden="true"> *</span>;
   return <form className="partner-inquiry-form" onSubmit={submit} noValidate aria-describedby="partner-inquiry-intro partner-inquiry-status">
     <input type="hidden" name="locale" value={content.locale} />
+    <label className="sr-only" aria-hidden="true">Leave this field blank<input name="honeypot" tabIndex={-1} autoComplete="off" /></label>
     <fieldset>
       <legend>{copy.sections.contact}</legend>
       <div className="partner-fields">

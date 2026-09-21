@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS dove.form_submissions (
   locale TEXT NOT NULL CHECK (locale IN ('en', 'es')),
   payload JSONB NOT NULL DEFAULT '{}'::jsonb,
   delivery_error TEXT,
+  provider_message_id TEXT,
   received_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   delivered_at TIMESTAMPTZ,
   archived_at TIMESTAMPTZ,
@@ -26,3 +27,8 @@ CREATE INDEX IF NOT EXISTS idx_dove_form_submissions_status_received
 ALTER TABLE dove.form_submissions ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON TABLE dove.form_submissions FROM anon, authenticated;
 GRANT ALL ON TABLE dove.form_submissions TO service_role;
+GRANT SELECT ON TABLE dove.form_submissions TO authenticated;
+
+CREATE POLICY "dove_admin_view_form_submissions" ON dove.form_submissions
+  FOR SELECT TO authenticated
+  USING (dove.is_admin());

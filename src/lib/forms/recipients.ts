@@ -1,5 +1,3 @@
-import "server-only";
-
 import { links } from "@/content/links";
 import type { FormType } from "./types";
 

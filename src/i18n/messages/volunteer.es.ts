@@ -91,7 +91,7 @@ export const volunteerEs = {
     acceptance: "He leído y acepto el Volunteer Release and Assumption of Risk en inglés que aparece arriba. Escribir mi nombre en esta solicitud constituye mi firma electrónica.",
     submit: "Enviar solicitud de voluntariado",
     busy: "Enviando…",
-    unavailable: "El envío en línea todavía no está configurado. Tus datos no se enviaron ni se guardaron. Mantén el formulario abierto y comunícate con el equipo de operaciones.",
+    unavailable: "No pudimos entregar tu solicitud por correo. Se guardó para que el equipo de operaciones pueda dar seguimiento; también puedes contactarlo directamente.",
     invalid: "Corrige los campos señalados y acepta el acuerdo antes de enviar.",
     success: "Recibimos tu solicitud. El equipo de Dove se pondrá en contacto contigo.",
     contact: "Escribir al equipo de operaciones",

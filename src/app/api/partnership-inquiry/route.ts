@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isLocale } from "@/i18n/config";
 import { validatePartnershipInquiry, type PartnershipInquiryInput } from "@/lib/partnership-inquiry";
+import { deliverFormSubmission, isAllowedFormOrigin, isRateLimited } from "@/lib/forms/server";
 
 function limited(value: unknown, max: number) {
   return String(value ?? "").trim().slice(0, max);
@@ -12,8 +13,8 @@ export async function POST(request: NextRequest) {
   }
   const length = Number(request.headers.get("content-length") || "0");
   if (length > 30_000) return NextResponse.json({ status: "invalid" }, { status: 413 });
-  const origin = request.headers.get("origin");
-  if (origin && origin !== request.nextUrl.origin) return NextResponse.json({ status: "invalid" }, { status: 403 });
+  if (!isAllowedFormOrigin(request)) return NextResponse.json({ status: "invalid" }, { status: 403 });
+  if (isRateLimited(request)) return NextResponse.json({ status: "invalid" }, { status: 429 });
   let body: Partial<PartnershipInquiryInput>;
   try { body = await request.json(); }
   catch { return NextResponse.json({ status: "invalid" }, { status: 400 }); }
@@ -34,9 +35,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }
 
-  // TODO: CONNECT VERIFIED PARTNERSHIP INQUIRY PROVIDER.
-  // TODO: CLIENT CONFIRM PARTNERSHIP FORM RECIPIENT.
-  // Intended recipient: executivedirector@doveyouthdevelopment.org
-  // No submission record is created until a verified provider accepts it.
-  return NextResponse.json({ status: "unavailable" }, { status: 503 });
+  const result = await deliverFormSubmission({
+    formType: "partnership", name: input.fullName, email: input.workEmail, phone: input.phone || undefined, organization: input.organizationName,
+    reason: input.interest, message: [input.message, `Website: ${input.website || "Not provided"}`, `Role: ${input.role || "Not provided"}`, `Referral: ${input.referral || "Not provided"}`].join("\n\n"), locale: input.locale,
+    payload: { website: input.website, role: input.role, interest: input.interest, referral: input.referral },
+  }, { honeypot: String(body.honeypot ?? "") });
+  return NextResponse.json(result);
 }

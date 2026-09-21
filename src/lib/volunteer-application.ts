@@ -10,6 +10,7 @@ export type VolunteerApplicationInput = {
   acceptedRelease: boolean;
   locale: Locale;
   releaseVersion: typeof VOLUNTEER_RELEASE_VERSION;
+  honeypot?: string;
 };
 
 export type VolunteerField = keyof Pick<VolunteerApplicationInput,
@@ -37,11 +38,10 @@ export async function submitVolunteerApplication(input: VolunteerApplicationInpu
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(input),
     });
-    if (response.status === 503) return { status: "unavailable" };
     if (response.status === 400) return { status: "invalid" };
     if (!response.ok) return { status: "error" };
-    const result = await response.json() as VolunteerSubmitResult;
-    return result.status === "accepted" ? result : { status: "error" };
+    const result = await response.json() as { status?: string };
+    return result.status === "delivered" || result.status === "spam" ? { status: "accepted" } : { status: "error" };
   } catch {
     return { status: "unavailable" };
   }

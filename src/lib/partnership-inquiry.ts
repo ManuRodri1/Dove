@@ -11,6 +11,7 @@ export type PartnershipInquiryInput = {
   message: string;
   referral: string;
   locale: Locale;
+  honeypot?: string;
 };
 
 export type PartnershipInquiryField = "fullName" | "workEmail" | "organizationName" | "interest" | "message";
@@ -35,11 +36,10 @@ export async function submitPartnershipInquiry(input: PartnershipInquiryInput): 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(input),
     });
-    if (response.status === 503) return { status: "unavailable" };
     if (response.status === 400) return { status: "invalid" };
     if (!response.ok) return { status: "error" };
-    const result = await response.json() as PartnershipInquiryResult;
-    return result.status === "accepted" ? result : { status: "error" };
+    const result = await response.json() as { status?: string };
+    return result.status === "delivered" || result.status === "spam" ? { status: "accepted" } : { status: "error" };
   } catch {
     return { status: "unavailable" };
   }

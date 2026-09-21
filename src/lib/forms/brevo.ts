@@ -8,7 +8,7 @@ export type TransactionalEmail = {
   textContent: string;
 };
 
-export type EmailProvider = { send(email: TransactionalEmail): Promise<void> };
+export type EmailProvider = { send(email: TransactionalEmail): Promise<{ messageId?: string }> };
 
 export function createBrevoAdapter(fetcher: typeof fetch = fetch): EmailProvider {
   const apiKey = process.env.BREVO_API_KEY;
@@ -33,6 +33,8 @@ export function createBrevoAdapter(fetcher: typeof fetch = fetch): EmailProvider
         }),
       });
       if (!response.ok) throw new Error(`Brevo delivery failed (${response.status}).`);
+      const result = await response.json().catch(() => ({})) as { messageId?: string };
+      return { messageId: result.messageId };
     },
   };
 }

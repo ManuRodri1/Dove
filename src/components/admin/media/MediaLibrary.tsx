@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { getMediaUploadSignatureAction, registerMediaUploadAction } from "@/app/admin/media/actions";
+import { registerMediaUploadAction } from "@/app/admin/media/actions";
+import { getCloudinaryUploadSignature } from "@/lib/cloudinary/client";
 import type { AdminMediaAsset } from "@/lib/cms/admin-queries";
 
 type CloudinaryResult = { secure_url?: string; public_id?: string; resource_type?: string; format?: string; width?: number; height?: number; bytes?: number; original_filename?: string; error?: { message?: string } };
@@ -23,7 +24,7 @@ export default function MediaLibrary({ assets, query }: { assets: AdminMediaAsse
     if (file.size > 15 * 1024 * 1024) { setStatus("Images must be 15 MB or smaller."); return; }
     setUploading(true); setStatus("Preparing secure upload…");
     try {
-      const signature = await getMediaUploadSignatureAction("stories");
+      const signature = await getCloudinaryUploadSignature("uploads");
       if (!signature.success || !signature.data) throw new Error(signature.error ?? "Upload is not configured.");
       const form = new FormData();
       form.append("file", file); form.append("api_key", signature.data.apiKey); form.append("timestamp", String(signature.data.timestamp)); form.append("signature", signature.data.signature); form.append("folder", signature.data.folder);

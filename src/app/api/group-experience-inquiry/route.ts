@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isLocale } from "@/i18n/config";
 import { validateGroupExperienceInquiry, type GroupExperienceInquiryInput } from "@/lib/group-experience-inquiry";
+import { deliverFormSubmission, isAllowedFormOrigin, isRateLimited } from "@/lib/forms/server";
 
 function limited(value: unknown, max: number) {
   return String(value ?? "").trim().slice(0, max);
@@ -12,8 +13,8 @@ export async function POST(request: NextRequest) {
   }
   const length = Number(request.headers.get("content-length") || "0");
   if (length > 30_000) return NextResponse.json({ status: "invalid" }, { status: 413 });
-  const origin = request.headers.get("origin");
-  if (origin && origin !== request.nextUrl.origin) return NextResponse.json({ status: "invalid" }, { status: 403 });
+  if (!isAllowedFormOrigin(request)) return NextResponse.json({ status: "invalid" }, { status: 403 });
+  if (isRateLimited(request)) return NextResponse.json({ status: "invalid" }, { status: 429 });
   let body: Partial<GroupExperienceInquiryInput>;
   try { body = await request.json(); }
   catch { return NextResponse.json({ status: "invalid" }, { status: 400 }); }
@@ -39,8 +40,16 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ status: "invalid" }, { status: 400 });
   }
 
-  // TODO: CONNECT VERIFIED GROUP INQUIRY PROVIDER.
-  // Intended recipient: executivedirector@doveyouthdevelopment.org
-  // No submittedAt or delivery record is created until a verified provider accepts it.
-  return NextResponse.json({ status: "unavailable" }, { status: 503 });
+  const message = [
+    `Group type: ${input.groupType || "Not provided"}`, `Estimated group size: ${input.estimatedGroupSize}`,
+    `Preferred start date: ${input.preferredStartDate}`, `Alternate dates: ${input.alternateDates || "Not provided"}`,
+    `Approximate duration: ${input.approximateDuration || "Not provided"}`, `About group: ${input.aboutGroup || "Not provided"}`,
+    `Skills/interests: ${input.skillsInterests || "Not provided"}`,
+    `Planning interests: ${[input.discussLodging && "lodging", input.discussTransportation && "transportation", input.discussExcursions && "excursions"].filter(Boolean).join(", ") || "None selected"}`,
+  ].join("\n");
+  const result = await deliverFormSubmission({
+    formType: "travel", name: input.fullName, email: input.email, phone: input.phone || undefined, organization: input.organizationName || undefined,
+    message, locale: input.locale, payload: { groupType: input.groupType, estimatedGroupSize: Number(input.estimatedGroupSize), preferredStartDate: input.preferredStartDate, alternateDates: input.alternateDates, approximateDuration: input.approximateDuration, aboutGroup: input.aboutGroup, skillsInterests: input.skillsInterests, discussLodging: input.discussLodging, discussTransportation: input.discussTransportation, discussExcursions: input.discussExcursions },
+  }, { honeypot: String(body.honeypot ?? "") });
+  return NextResponse.json(result);
 }

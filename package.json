@@ -16,7 +16,7 @@
     "verify:volunteer": "node scripts/verify-volunteer.mjs",
     "verify:travel": "node scripts/verify-travel-with-purpose.mjs",
     "verify:partnerships": "node scripts/verify-partnerships.mjs",
-    "test:cms": "tsx --test tests/cms-blocks.test.ts tests/cms-services.test.ts tests/wix-importer.test.ts tests/campaigns.test.ts",
+    "test:cms": "tsx --test tests/cms-blocks.test.ts tests/cms-services.test.ts tests/wix-importer.test.ts tests/campaigns.test.ts tests/forms.test.ts",
     "migrate:campaigns": "tsx scripts/migrate-historical-campaigns.ts",
     "verify:campaigns": "tsx scripts/verify-campaigns-phase3.ts",
     "migrate:wix:dry-run": "tsx scripts/migrate-wix-blog.ts",
@@ -38,7 +38,8 @@
     "@tiptap/starter-kit": "^3.6.6",
     "next": "16.3.5",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.2",

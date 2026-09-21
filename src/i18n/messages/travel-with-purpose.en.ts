@@ -111,7 +111,7 @@ export const travelWithPurposeEn = {
     submit: "Send Group Inquiry",
     busy: "Sending…",
     success: "Thanks — We've Received Your Group Inquiry. The Dove team will review your request and follow up to discuss the experience.",
-    unavailable: "Online delivery is not configured yet. Your information has not been sent or stored. Keep the form open and contact the executive director.",
+    unavailable: "We could not deliver your inquiry by email. It has been saved for the Dove team to follow up; you may also contact the executive director directly.",
     invalid: "Please correct the marked fields before sending your inquiry.",
     contact: "Email the executive director",
     errors: {

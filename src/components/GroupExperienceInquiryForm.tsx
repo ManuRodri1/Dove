@@ -34,6 +34,7 @@ export default function GroupExperienceInquiryForm({ content }: { content: Trave
       discussTransportation: data.get("discussTransportation") === "on",
       discussExcursions: data.get("discussExcursions") === "on",
       locale: content.locale,
+      honeypot: String(data.get("honeypot") ?? ""),
     };
     const nextErrors = validateGroupExperienceInquiry(input);
     setErrors(nextErrors);
@@ -54,6 +55,7 @@ export default function GroupExperienceInquiryForm({ content }: { content: Trave
   const required = <span aria-hidden="true"> *</span>;
   return <form className="group-inquiry-form" onSubmit={submit} noValidate aria-describedby="group-inquiry-intro group-inquiry-status">
     <input type="hidden" name="locale" value={content.locale} />
+    <label className="sr-only" aria-hidden="true">Leave this field blank<input name="honeypot" tabIndex={-1} autoComplete="off" /></label>
 
     <fieldset>
       <legend>{copy.sections.contact}</legend>

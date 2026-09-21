@@ -86,7 +86,7 @@ export const partnershipsEs: typeof partnershipsEn = {
     submit: "Enviar solicitud de alianza",
     busy: "Enviando…",
     success: "Gracias. Comencemos la conversación. Hemos recibido tu solicitud de alianza. Un miembro del equipo de Dove se pondrá en contacto para conocer más.",
-    unavailable: "El envío en línea aún no está disponible. No hemos guardado tu información. Escríbele directamente a Dove por correo.",
+    unavailable: "No pudimos entregar tu consulta por correo. Se guardó para que el equipo de Dove pueda dar seguimiento; también puedes escribirle directamente a Dove.",
     invalid: "Revisa los campos señalados.",
     fallback: "Escribe a la Directora Ejecutiva",
     errors: { fullName: "Escribe tu nombre completo.", workEmail: "Escribe un correo laboral válido.", organizationName: "Escribe el nombre de tu organización o empresa.", interest: "Selecciona un interés de colaboración.", message: "Cuéntanos qué les gustaría explorar." },

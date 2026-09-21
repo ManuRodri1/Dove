@@ -2,14 +2,10 @@ import "server-only";
 
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createBrevoAdapter, type EmailProvider } from "./brevo";
-import { recipientForSubmission } from "./recipients";
-import { formNotification } from "./template";
+import { deliverStoredFormSubmission, type SubmissionStore } from "./delivery";
 import type { FormSubmission, FormSubmitResult } from "./types";
 
-type SubmissionStore = {
-  insert(submission: FormSubmission & { recipient: string; receivedAt: string; status: "received" | "spam" }): Promise<{ id: string }>;
-  update(id: string, status: "delivered" | "delivery_failed", error?: string): Promise<void>;
-};
+export type { SubmissionStore } from "./delivery";
 
 const rateLimits = new Map<string, { count: number; resetAt: number }>();
 const WINDOW_MS = 10 * 60 * 1000;
@@ -29,10 +25,11 @@ function defaultStore(): SubmissionStore {
       if (error || !data) throw new Error("Unable to store form submission.");
       return { id: data.id };
     },
-    async update(id, status, error) {
+    async update(id, status, details) {
       const { error: updateError } = await client.from("form_submissions").update({
         status, delivered_at: status === "delivered" ? new Date().toISOString() : null,
-        delivery_error: error?.slice(0, 500) ?? null,
+        delivery_error: details?.error?.slice(0, 500) ?? null,
+        provider_message_id: details?.providerMessageId ?? null,
       }).eq("id", id);
       if (updateError) throw new Error("Unable to update form delivery status.");
     },
@@ -60,22 +57,5 @@ export async function deliverFormSubmission(
   submission: FormSubmission,
   options: { honeypot?: string; store?: SubmissionStore; provider?: EmailProvider } = {},
 ): Promise<FormSubmitResult> {
-  const store = options.store ?? defaultStore();
-  const recipient = recipientForSubmission(submission.formType, submission.reason);
-  const receivedAt = new Date().toISOString();
-  if (options.honeypot?.trim()) {
-    await store.insert({ ...submission, recipient, receivedAt, status: "spam" });
-    return { status: "spam" };
-  }
-  const stored = await store.insert({ ...submission, recipient, receivedAt, status: "received" });
-  try {
-    const notification = formNotification(submission, receivedAt);
-    await (options.provider ?? createBrevoAdapter()).send({ to: recipient, replyTo: submission.email, ...notification });
-    await store.update(stored.id, "delivered");
-    return { status: "delivered" };
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown delivery error.";
-    try { await store.update(stored.id, "delivery_failed", message); } catch { /* Preserve the original provider failure. */ }
-    return { status: "delivery_failed" };
-  }
+  return deliverStoredFormSubmission(submission, { honeypot: options.honeypot, store: options.store ?? defaultStore(), provider: options.provider ?? createBrevoAdapter() });
 }
