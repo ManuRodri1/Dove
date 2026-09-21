@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { links } from "@/content/links";
 import { getCampaignsCopy } from "@/content/campaigns-ui";
+import CampaignsHeroVideo from "./CampaignsHeroVideo";
 import type { Locale } from "@/i18n/config";
 import type { PublicCampaign } from "@/lib/cms/public-campaigns";
 
@@ -32,7 +33,7 @@ function CampaignHistory({ campaign, locale }: { campaign: PublicCampaign; local
 export default function CampaignArchive({ locale, active, upcoming, past, showAllPast }: { locale: Locale; active: PublicCampaign[]; upcoming: PublicCampaign[]; past: PublicCampaign[]; showAllPast: boolean }) {
   const copy = getCampaignsCopy(locale);
   return <>
-    <header className="campaigns-hero"><div className="container"><p className="eyebrow">{copy.eyebrow}</p><h1>{copy.heading}</h1><p className="lede">{copy.intro}</p></div></header>
+    <CampaignsHeroVideo locale={locale} copy={copy} />
     <div className="campaigns-index container">
       {active.length ? <section aria-labelledby="current-campaigns"><header className="campaign-section-head"><h2 id="current-campaigns">{copy.current}</h2><span>{String(active.length).padStart(2, "0")}</span></header>{active.map((campaign) => <CampaignFeature key={campaign.id} campaign={campaign} locale={locale} />)}</section> : <section className="campaign-empty" aria-labelledby="current-campaigns"><h2 id="current-campaigns">{copy.current}</h2><p>{copy.empty}</p><div className="campaign-empty-actions"><a className="button button--primary" href={links.giving.general}>{copy.donate}</a><a className="button button--teal" href={links.giving.childSponsorship}>{copy.sponsor}</a></div></section>}
       {upcoming.length > 0 && <section aria-labelledby="upcoming-campaigns"><header className="campaign-section-head"><h2 id="upcoming-campaigns">{copy.upcoming}</h2><span>{String(upcoming.length).padStart(2, "0")}</span></header>{upcoming.map((campaign) => <CampaignFeature key={campaign.id} campaign={campaign} locale={locale} />)}</section>}

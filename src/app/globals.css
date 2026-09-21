@@ -14,11 +14,71 @@
 }
 
 /* Campaigns: a living editorial archive, not a fundraising dashboard. */
-.campaigns-hero { padding-block: clamp(var(--space-3xl), 10vw, var(--space-5xl)); background: var(--color-paper); border-block-end: var(--rule-fine) solid var(--color-rule); }
-.campaigns-hero .container { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .55fr); gap: var(--space-xl); align-items: end; }
-.campaigns-hero .eyebrow { grid-column: 1 / -1; }
-.campaigns-hero h1 { max-width: 14ch; }
-.campaigns-hero .lede { max-width: 34rem; padding-block-end: var(--space-sm); }
+.campaigns-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(32rem, 58vh, 42rem);
+  display: flex;
+  align-items: flex-end;
+  overflow: clip;
+  background: var(--color-teal-deep);
+  color: var(--color-light-muted);
+  border-block-end: var(--rule-fine) solid var(--color-rule);
+}
+.campaigns-hero-media,
+.campaigns-hero-overlay { position: absolute; inset: 0; }
+.campaigns-hero-media { z-index: -2; background: var(--color-teal-deep); }
+.campaigns-hero-media img { object-fit: cover; object-position: center center; }
+.campaigns-hero-media iframe {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: max(100%, 177.78svh);
+  height: max(100%, 56.25vw);
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.campaigns-hero-media iframe.is-ready { opacity: 1; }
+.campaigns-hero-overlay {
+  z-index: -1;
+  background: linear-gradient(90deg, var(--color-hero-overlay-start), var(--color-hero-overlay-end) 62%, var(--color-hero-overlay-bottom));
+}
+.campaigns-hero-content {
+  padding-block: var(--space-3xl) var(--space-4xl);
+  display: grid;
+  gap: var(--space-sm);
+}
+.campaigns-hero .eyebrow { color: var(--color-light-muted); }
+.campaigns-hero h1 { max-width: 14ch; color: var(--color-white); }
+.campaigns-hero .lede { max-width: 36rem; color: var(--color-light-muted); }
+.campaigns-video-toggle {
+  position: absolute;
+  inset-inline-end: clamp(var(--space-md), 4vw, var(--space-2xl));
+  inset-block-end: var(--space-lg);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 44px;
+  padding: var(--space-2xs) var(--space-sm);
+  border: var(--rule-fine) solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.42);
+  color: var(--color-white);
+  font: 700 var(--text-xs)/1 var(--font-body);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+.campaigns-video-toggle:hover {
+  background: rgba(0, 0, 0, 0.65);
+  border-color: var(--color-white);
+}
+@media (max-width: 48rem) {
+  .campaigns-hero:not(.is-user-activated) .campaigns-hero-media iframe { display: none; }
+}
 .campaigns-index { display: grid; gap: var(--space-4xl); padding-block: var(--space-4xl); }
 .campaigns-index > section { display: grid; gap: var(--space-xl); }
 .campaign-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md); padding-block-end: var(--space-sm); border-block-end: var(--rule-fine) solid var(--color-rule); }
@@ -2609,4 +2669,171 @@ button:active {
   background: var(--color-white);
   color: var(--color-muted);
   font-size: var(--text-sm);
+}
+
+/* Hallmark · genre: warm editorial nonprofit · macrostructure: Photographic / Portrait Ledger
+ * theme: locked Dove design system · enrichment: verified portraiture + poster-first video
+ * pre-emit critique: P5 H5 E5 S5 R5 V5
+ */
+.team-hero { background: var(--color-paper); }
+.team-hero-grid { display: grid; gap: var(--space-xl); align-items: center; }
+.team-hero-copy { min-width: 0; }
+.team-hero h1 { max-width: 10ch; }
+.team-hero-statement {
+  max-width: 13ch;
+  margin-top: var(--space-md);
+  color: var(--color-teal);
+  font: 600 var(--text-2xl)/1.12 var(--font-display);
+  letter-spacing: var(--tracking-display);
+}
+.team-hero .lede { max-width: 38rem; }
+.team-hero-visual { min-width: 0; }
+.team-hero-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: clip;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  background: var(--color-teal-deep);
+}
+.team-hero-media img { object-fit: cover; }
+.team-hero-media iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.team-hero-media iframe.is-ready { opacity: 1; }
+.team-hero-visual figcaption {
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--rule-fine) solid var(--color-rule);
+  border-top: 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+.team-video-toggle {
+  position: absolute;
+  right: var(--space-sm);
+  bottom: var(--space-sm);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 44px;
+  padding: var(--space-2xs) var(--space-sm);
+  border: var(--rule-fine) solid var(--color-light-rule);
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklch, var(--color-teal-deep) 82%, transparent);
+  color: var(--color-white);
+  font: 700 var(--text-xs)/1 var(--font-body);
+}
+.team-video-toggle:hover { background: var(--color-teal-deep); }
+.team-video-toggle:focus-visible { outline-color: var(--color-white); }
+
+.team-leadership-grid { display: grid; gap: var(--space-2xl); align-items: center; }
+.team-leadership-copy { max-width: 36rem; }
+.team-leadership-copy .team-role { margin-top: var(--space-xs); color: var(--color-accent-text); font-weight: 800; }
+.team-leadership-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md); margin-top: var(--space-lg); }
+.team-portrait {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  overflow: clip;
+  background: var(--color-paper-deep);
+}
+.team-portrait img { object-fit: cover; }
+.team-portrait--empty {
+  display: grid;
+  place-items: center;
+  background: var(--color-teal-soft);
+  color: var(--color-teal);
+}
+.team-portrait--empty::after {
+  content: "";
+  position: absolute;
+  inset: var(--space-sm);
+  border: var(--rule-fine) solid var(--color-rule);
+}
+.team-portrait--empty span { font: 600 var(--text-section)/1 var(--font-display); letter-spacing: var(--tracking-display); }
+.team-section-head { display: grid; gap: var(--space-md); margin-bottom: var(--space-2xl); }
+.team-section-head > .lede { max-width: 38rem; margin: 0; }
+.team-staff-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-2xl) var(--space-lg); }
+.team-person { min-width: 0; }
+.team-person-copy { padding-top: var(--space-sm); border-top: var(--rule-fine) solid var(--color-rule); }
+.team-person h3 { font-size: clamp(1.25rem, 2vw, 1.625rem); }
+.team-role { margin-top: var(--space-2xs); color: var(--color-body); font-size: var(--text-sm); font-weight: 700; }
+.team-email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 44px;
+  margin-top: var(--space-xs);
+  color: var(--color-teal);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
+.team-email svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.6; }
+
+.team-breather { padding-block: var(--space-3xl); background: var(--color-teal); color: var(--color-white); }
+.team-breather p { max-width: 16ch; color: var(--color-white); font: 600 var(--text-section)/1.12 var(--font-display); letter-spacing: var(--tracking-display); }
+
+.team-board { background: var(--color-teal-deep); color: var(--color-light-muted); }
+.team-board-layout { display: grid; gap: var(--space-2xl); }
+.team-board-intro { max-width: 34rem; }
+.team-board .eyebrow { color: var(--color-light-muted); }
+.team-board h2,
+.team-board h3 { color: var(--color-white); }
+.team-board-list { border-top: var(--rule-fine) solid var(--color-light-rule); }
+.team-board-person {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: center;
+  padding-block: var(--space-lg);
+  border-bottom: var(--rule-fine) solid var(--color-light-rule);
+}
+.team-board-person .team-portrait { aspect-ratio: 1; border-radius: var(--radius-small); }
+.team-board-person .team-role { color: var(--color-light-muted); }
+.team-context { color: var(--color-light-muted); font-size: var(--text-xs); line-height: 1.5; }
+.team-context:first-of-type { margin-top: var(--space-xs); }
+
+.team-dominican-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-xl) var(--space-md); }
+.team-dominican-person { min-width: 0; }
+.team-dominican-person .team-portrait { margin-bottom: var(--space-sm); }
+.team-dominican-person h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+.team-final :focus-visible { outline-color: var(--color-white); }
+
+@media (min-width: 40rem) {
+  .team-staff-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .team-dominican-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 48rem) {
+  .team-hero-grid { grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: var(--space-2xl); }
+  .team-leadership-grid { grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: var(--space-3xl); }
+  .team-leadership-grid > .team-portrait { min-height: 38rem; aspect-ratio: auto; border-radius: var(--radius-card); }
+  .team-section-head { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); align-items: end; gap: var(--space-3xl); }
+  .team-board-person { grid-template-columns: 8rem minmax(0, 1fr); }
+}
+
+@media (min-width: 64rem) {
+  .team-staff-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .team-person--staff-lead { grid-column: span 2; }
+  .team-board-layout { grid-template-columns: minmax(0, .72fr) minmax(0, 1.28fr); gap: var(--space-4xl); align-items: start; }
+  .team-board-intro { position: sticky; top: calc(var(--header-height) + var(--space-xl)); }
+}
+
+@media (max-width: 23.5rem) {
+  .team-dominican-grid { grid-template-columns: minmax(0, 1fr); }
+  .team-leadership-actions { align-items: flex-start; flex-direction: column; gap: var(--space-xs); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-hero-media iframe { transition-duration: var(--dur-micro); }
 }

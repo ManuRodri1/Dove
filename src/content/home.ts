@@ -11,7 +11,8 @@ export const isDevelopment = process.env.NODE_ENV === "development";
 export const featuredCampaign: Campaign | null = null;
 export function getHome(locale: Locale) {
   const copy = locale === "es" ? es : en;
-  const destinations = [links.ourStory(locale), links.whatWeDo(locale), links.volunteer.page(locale), links.section(locale, "impact"), links.campaigns(locale)];
+  const about = [links.ourStory(locale), links.ourTeam(locale)];
+  const destinations = [links.ourStory(locale), links.whatWeDo(locale), links.volunteer.page(locale), links.ourImpact(locale), links.stories(locale), links.campaigns(locale)];
   const support = [links.giving.general, links.giving.vocationalTraining, links.giving.general, links.partnerships(locale)];
   const experience = [links.volunteer.page(locale), links.travel.page(locale), links.partnerships(locale)];
   const footer = [links.giving.childSponsorship, links.giving.vocationalTraining, links.partnerships(locale), links.travel.page(locale), links.volunteer.page(locale)];
@@ -20,10 +21,11 @@ export function getHome(locale: Locale) {
     navigation: copy.navigation.map((item, i) => ({
       ...item,
       href: destinations[i],
-      children: i === 2 ? copy.getInvolvedNavigation.map((child, childIndex) => ({
-        ...child,
-        href: [links.volunteer.page(locale), links.travel.page(locale), links.partnerships(locale)][childIndex],
-      })) : undefined,
+      children: i === 0 ? copy.aboutNavigation.map((child, childIndex) => ({ ...child, href: about[childIndex] }))
+        : i === 2 ? copy.getInvolvedNavigation.map((child, childIndex) => ({
+          ...child,
+          href: [links.volunteer.page(locale), links.travel.page(locale), links.partnerships(locale)][childIndex],
+        })) : undefined,
     })),
     actions: { sponsor: { ...copy.actions.sponsor, href: links.giving.childSponsorship }, donate: { ...copy.actions.donate, href: links.giving.general }, story: { ...copy.actions.story, href: links.ourStory(locale) } },
     history: { ...copy.history, link: { ...copy.history.link, href: links.ourStory(locale) } },
@@ -31,7 +33,7 @@ export function getHome(locale: Locale) {
     experience: { ...copy.experience, items: copy.experience.items.map((item, i) => ({ ...item, link: { ...item.link, href: experience[i] } })) },
     partnership: { ...copy.partnership, link: { ...copy.partnership.link, href: links.partnerships(locale) } },
     stories: { ...copy.stories, link: { ...copy.stories.link, href: links.stories(locale) } },
-    footer: { ...copy.footer, contact: { ...copy.footer.contact, href: links.contact }, privacy: { ...copy.footer.privacy, href: links.privacy }, support: copy.footer.support.map((item, i) => ({ ...item, href: footer[i] })) },
+    footer: { ...copy.footer, contact: { ...copy.footer.contact, href: links.contact(locale) }, privacy: { ...copy.footer.privacy, href: links.privacy }, support: copy.footer.support.map((item, i) => ({ ...item, href: footer[i] })) },
   };
 }
 export type HomeContent = ReturnType<typeof getHome>;

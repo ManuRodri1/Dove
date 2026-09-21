@@ -5,7 +5,11 @@ export const es: typeof en = {
   ui: { skip: "Saltar al contenido", home: "Inicio", mainNav: "Navegación principal", mobileNav: "Navegación móvil", footerNav: "Navegación del pie de página", supportNav: "Formas de apoyar a Dove", openMenu: "Abrir menú de navegación", closeMenu: "Cerrar menú de navegación", unpublished: "Aún no publicado", readStory: "Leer historia", play: "Reproducir video", pause: "Pausar video" },
   newsletter: { heading: "Mantente conectado con Dove", description: "Historias, novedades y formas de generar un impacto, directamente desde Puerto Plata.", email: "Correo electrónico", submit: "Únete a la comunidad de Dove", busy: "Enviando…", unavailable: "La suscripción en línea aún no está disponible. Inténtalo más adelante. No hemos guardado tu correo.", invalid: "Escribe una dirección de correo válida.", notice: "Pronto podrás suscribirte a nuestro boletín." },
   seo: { title: "Dove Youth Development | Creando futuros en Puerto Plata", description: "Acompañamos a niños y jóvenes de Puerto Plata con educación, desarrollo de habilidades, formación vocacional y oportunidades para crecer en comunidad." },
-  navigation: [{ label: "Nosotros", href: "" }, { label: "Qué hacemos", href: "" }, { label: "Participa", href: "" }, { label: "Nuestro impacto", href: "" }, { label: "Campañas", href: "" }],
+  navigation: [{ label: "Nosotros", href: "" }, { label: "Qué hacemos", href: "" }, { label: "Participa", href: "" }, { label: "Nuestro impacto", href: "" }, { label: "Historias y Noticias", href: "" }, { label: "Campañas", href: "" }],
+  aboutNavigation: [
+    { label: "Nuestra Historia", href: "" },
+    { label: "Nuestro Equipo", href: "" },
+  ],
   getInvolvedNavigation: [
     { label: "Voluntariado", href: "" },
     { label: "Viaja con propósito", href: "" },

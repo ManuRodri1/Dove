@@ -40,4 +40,4 @@ export function proxy(request: NextRequest) {
   return NextResponse.next({ request: { headers } });
 }
 
-export const config = { matcher: ["/", "/our-story", "/partnerships", "/the-dove-experience", "/volunteer-release", "/grouptravel", "/en/:path*", "/es/:path*"] };
+export const config = { matcher: ["/", "/our-story", "/partnerships", "/dove-board", "/the-dove-experience", "/volunteer-release", "/grouptravel", "/en/:path*", "/es/:path*"] };

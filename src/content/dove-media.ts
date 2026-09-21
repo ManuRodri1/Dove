@@ -177,6 +177,7 @@ export const doveMedia = {
       position: "center center",
     },
   },
+  contact: { hero: { src: "https://static.wixstatic.com/media/d88784_326c45a9de604bfca7678cf383528cb2~mv2.jpg", alt: "Front entrance of Dove Youth Development in Puerto Plata" } },
   partnerships: {
     hero: {
       src: `${wix}d88784_f01b04e0f24e47b09cfaedcc44f31160~mv2.jpg`,

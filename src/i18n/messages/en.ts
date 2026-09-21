@@ -12,8 +12,13 @@ export const en = {
     { label: "What We Do", href: "" },
     { label: "Get Involved", href: "" },
     { label: "Our Impact", href: "" },
+    { label: "Stories & News", href: "" },
     { label: "Campaigns", href: "" },
 
+  ],
+  aboutNavigation: [
+    { label: "Our Story", href: "" },
+    { label: "Our Team", href: "" },
   ],
   getInvolvedNavigation: [
     { label: "Volunteer", href: "" },

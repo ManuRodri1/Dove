@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { doveMedia } from "@/content/dove-media";
 
 const navigation = [
   { href: "/admin", label: "Dashboard" },
@@ -24,8 +26,15 @@ export default function AdminShell({
     <div className="admin-root">
       <aside className="admin-sidebar" aria-label="CMS navigation">
         <Link className="admin-brand" href="/admin" aria-label="Dove CMS dashboard">
-          <span className="admin-brand-mark" aria-hidden="true">D</span>
-          <span>Dove CMS</span>
+          <Image
+            src={doveMedia.logo.main.src}
+            alt={doveMedia.logo.main.alt}
+            width={160}
+            height={36}
+            style={{ width: "auto", height: "30px", objectFit: "contain" }}
+            priority
+          />
+          <span className="admin-brand-tag">CMS</span>
         </Link>
         <nav className="admin-nav">
           {navigation.map((item) => {
@@ -40,7 +49,16 @@ export default function AdminShell({
       </aside>
       <div className="admin-stage">
         <header className="admin-topbar">
-          <div className="admin-mobile-brand">Dove CMS</div>
+          <Link className="admin-mobile-brand" href="/admin" aria-label="Dove CMS dashboard">
+            <Image
+              src={doveMedia.logo.main.src}
+              alt={doveMedia.logo.main.alt}
+              width={140}
+              height={32}
+              style={{ width: "auto", height: "24px", objectFit: "contain" }}
+            />
+            <span className="admin-brand-tag">CMS</span>
+          </Link>
           <div className="admin-user">
             <span><strong>{user.displayName}</strong><small>{user.email}</small></span>
             <span className="admin-role">{user.role}</span>

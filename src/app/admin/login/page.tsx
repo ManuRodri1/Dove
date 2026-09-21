@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { doveMedia } from "@/content/dove-media";
 
 export default async function AdminLoginPage({
   searchParams,
@@ -51,7 +53,17 @@ export default async function AdminLoginPage({
       }}
     >
       <div style={{ marginBottom: "1.5rem", textAlign: "center" }}>
-        <h1 style={{ fontSize: "1.5rem", color: "#005463", margin: "0 0 0.5rem" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.25rem" }}>
+          <Image
+            src={doveMedia.logo.main.src}
+            alt={doveMedia.logo.main.alt}
+            width={240}
+            height={48}
+            style={{ width: "auto", height: "42px", objectFit: "contain" }}
+            priority
+          />
+        </div>
+        <h1 style={{ fontSize: "1.35rem", color: "#005463", margin: "0 0 0.4rem", fontWeight: 700 }}>
           Dove CMS Login
         </h1>
         <p style={{ fontSize: "0.875rem", color: "#666", margin: 0 }}>
