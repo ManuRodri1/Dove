@@ -3,7 +3,7 @@
  * Wix originals remain remote; next/image generates cached delivery variants.
  */
 export type DoveImage = { src: string; alt: string; position?: string };
-const wix = "https://static.wixstatic.com/media/";
+const wix = "https://res.cloudinary.com/vloh9uw1/image/fetch/f_auto,q_auto/https://static.wixstatic.com/media/";
 const videoRoot = "https://res.cloudinary.com/vloh9uw1/video/upload/";
 const videoId = "v1789135765/entrega_utiles_DOVE_OF";
 
@@ -177,7 +177,7 @@ export const doveMedia = {
       position: "center center",
     },
   },
-  contact: { hero: { src: "https://static.wixstatic.com/media/d88784_326c45a9de604bfca7678cf383528cb2~mv2.jpg", alt: "Front entrance of Dove Youth Development in Puerto Plata" } },
+  contact: { hero: { src: `${wix}d88784_326c45a9de604bfca7678cf383528cb2~mv2.jpg`, alt: "Front entrance of Dove Youth Development in Puerto Plata" } },
   partnerships: {
     hero: {
       src: `${wix}d88784_f01b04e0f24e47b09cfaedcc44f31160~mv2.jpg`,

@@ -18,16 +18,7 @@ export default function OurTeamHeroVideo({ content }: { content: TeamContent }) 
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const desktop = window.matchMedia("(min-width: 48rem)");
-    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-    const activate = () => {
-      if (desktop.matches && !motion.matches && !saveData) {
-        setLoaded(true);
-        setPlaying(true);
-      }
-    };
-    if (document.readyState === "complete") activate();
-    else window.addEventListener("load", activate, { once: true });
+
     const preference = () => {
       if (motion.matches) {
         userPaused.current = true;
@@ -37,7 +28,7 @@ export default function OurTeamHeroVideo({ content }: { content: TeamContent }) 
     };
     const visibility = () => {
       if (document.hidden) command(frame.current, "pauseVideo");
-      else if (!userPaused.current && !motion.matches) {
+      else if (!userPaused.current && !motion.matches && loaded) {
         setPlaying(true);
         command(frame.current, "playVideo");
       }
@@ -45,11 +36,10 @@ export default function OurTeamHeroVideo({ content }: { content: TeamContent }) 
     motion.addEventListener("change", preference);
     document.addEventListener("visibilitychange", visibility);
     return () => {
-      window.removeEventListener("load", activate);
       motion.removeEventListener("change", preference);
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, []);
+  }, [loaded]);
 
   function toggle() {
     if (!loaded) {
@@ -76,7 +66,7 @@ export default function OurTeamHeroVideo({ content }: { content: TeamContent }) 
       </div>
       <figure className="team-hero-visual">
         <div className="team-hero-media">
-          <Image src={video.poster} alt="" fill sizes="(min-width: 768px) 58vw, 100vw" preload quality={85} />
+          <Image src={video.poster} alt="" fill sizes="(min-width: 768px) 58vw, 100vw" priority quality={85} />
           {loaded && !failed && <iframe ref={frame} className={ready ? "is-ready" : ""} src={embed}
             title={content.hero.videoTitle} allow="autoplay; encrypted-media; picture-in-picture"
             referrerPolicy="strict-origin-when-cross-origin" tabIndex={-1}

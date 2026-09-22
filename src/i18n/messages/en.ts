@@ -1,29 +1,62 @@
 import { doveMedia } from "@/content/dove-media";
+
 export const en = {
-  ui: { skip: "Skip to content", home: "Home", mainNav: "Main navigation", mobileNav: "Mobile navigation", footerNav: "Footer navigation", supportNav: "Ways to support Dove", openMenu: "Open navigation menu", closeMenu: "Close navigation menu", unpublished: "Not yet published", readStory: "Read story", play: "Play video", pause: "Pause video" },
-  newsletter: { heading: "Stay Connected With Dove", description: "Stories, updates and ways to make a difference — directly from Puerto Plata.", email: "Email address", submit: "Join the Dove Community", busy: "Submitting…", unavailable: "Online signup is not available yet. Please try again later. Your email has not been saved.", invalid: "Please enter a valid email address.", notice: "Newsletter signup is coming soon." },
+  ui: {
+    skip: "Skip to content",
+    home: "Home",
+    mainNav: "Main navigation",
+    mobileNav: "Mobile navigation",
+    footerNav: "Footer navigation",
+    supportNav: "Ways to support Dove",
+    openMenu: "Open navigation menu",
+    closeMenu: "Close navigation menu",
+    unpublished: "Not yet published",
+    readStory: "Read story",
+    play: "Play video",
+    pause: "Pause video",
+  },
+  newsletter: {
+    heading: "Stay Connected With Dove",
+    description:
+      "Stories, updates and ways to make a difference — directly from Puerto Plata.",
+    email: "Email address",
+    submit: "Join the Dove Community",
+    busy: "Submitting…",
+    unavailable:
+      "Online signup is not available yet. Please try again later. Your email has not been saved.",
+    invalid: "Please enter a valid email address.",
+    notice: "Newsletter signup is coming soon.",
+  },
   seo: {
     title: "Dove Youth Development | Creating Futures in Puerto Plata",
     description:
       "Dove Youth Development supports children and young people in Puerto Plata through education, skills development, vocational training, sponsorship, volunteering and community partnerships.",
   },
   navigation: [
-    { label: "About", href: "" },
-    { label: "What We Do", href: "" },
-    { label: "Get Involved", href: "" },
-    { label: "Our Impact", href: "" },
+    { label: "About", href: "", description: "The people and story behind Dove." },
+    { label: "What We Do", href: "", description: "The pathways that help young people thrive." },
+    { label: "Get Involved", href: "", description: "Ways to stand with the Dove community." },
+    { label: "Our Impact", href: "", description: "See what opportunity makes possible." },
     { label: "Stories & News", href: "" },
     { label: "Campaigns", href: "" },
-
   ],
   aboutNavigation: [
-    { label: "Our Story", href: "" },
-    { label: "Our Team", href: "" },
+    { label: "Our Story", href: "", description: "How Dove began and grew in Puerto Plata." },
+    { label: "Our Team", href: "", description: "Meet the people who make this work possible." },
+    { label: "Contact", href: "", description: "Connect with Dove and our local team." },
+  ],
+  whatWeDoNavigation: [
+    { label: "What We Do", href: "", description: "An overview of Dove’s connected programs." },
+    { label: "Vocational Training", href: "", description: "Practical skills and pathways toward work." },
   ],
   getInvolvedNavigation: [
-    { label: "Volunteer", href: "" },
-    { label: "Travel With Purpose", href: "" },
-    { label: "Corporate & Community Partnerships", href: "" },
+    { label: "Sponsor a Child", href: "", description: "Walk alongside a child through the years." },
+    { label: "Volunteer", href: "", description: "Share your time, skills, and care." },
+    { label: "Travel With Purpose", href: "", description: "Experience community-led travel in Puerto Plata." },
+    { label: "Corporate & Community Partnerships", href: "", description: "Build a lasting partnership with Dove." },
+  ],
+  impactNavigation: [
+    { label: "Our Impact", href: "", description: "Explore Dove’s approach and the change it supports." },
   ],
   actions: {
     sponsor: { label: "Sponsor a Child", href: "" },
@@ -33,7 +66,6 @@ export const en = {
   language: {
     english: "English",
     spanish: "Español",
-
     current: "EN",
     alternate: "ES",
   },
@@ -49,7 +81,6 @@ export const en = {
   history: {
     eyebrow: "Our roots · A vision born in 2002",
     heading: "A Vision That Grew Into Possibility",
-    // TODO: CLIENT CONFIRM FINAL HISTORY COPY
     description:
       "Dove’s vision began in 2002. The first Youth Center opened in 2009 with a group of 15 boys. Over time, that early work grew into a community supporting young people through education, relationships, skills and opportunity.",
     caption: "Puerto Plata, Dominican Republic",
@@ -221,6 +252,7 @@ export const en = {
     copyright: "Dove Youth Development. All rights reserved.",
     contact: { label: "Contact", href: "" },
     privacy: { label: "Privacy Policy", href: "" },
+    terms: { label: "Terms of Use", href: "" },
     support: [
       { label: "Sponsor a Child ($50/mo)", href: "" },
       { label: "Vocational Training", href: "" },
@@ -228,8 +260,5 @@ export const en = {
       { label: "Travel With Purpose", href: "" },
       { label: "Volunteer", href: "" },
     ],
-    // TODO: CLIENT CONFIRM LEGAL NONPROFIT WORDING
-    // TODO: CLIENT CONFIRM CONTACT DETAILS; screenshot details are not verification.
   },
 };
-

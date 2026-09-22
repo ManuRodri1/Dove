@@ -60,9 +60,10 @@ export default function Footer({ home }: { home: HomeContent }) {
           <p>
             © {new Date().getFullYear()} {home.footer.copyright}
           </p>
-          <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
             <LanguageSwitch locale={home.locale} full />
             <a href={home.footer.privacy.href} rel={externalRel(home.footer.privacy.href)}>{home.footer.privacy.label}</a>
+            <a href={home.footer.terms.href} rel={externalRel(home.footer.terms.href)}>{home.footer.terms.label}</a>
           </div>
         </div>
       </div>

@@ -112,14 +112,9 @@ export default function PartnershipsPage({ content, home }: { content: Partnersh
   </>;
 }
 
-export function PartnershipsStructuredData({ content, home }: { content: PartnershipsContent; home: HomeContent }) {
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    inLanguage: content.locale,
-    name: content.faq.heading,
-    mainEntity: content.faq.items.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })),
-    publisher: { "@type": "Organization", name: "Dove Youth Development", url: `https://www.doveyouthdevelopment.org/${home.locale}` },
-  };
+import { getFaqSchema } from "@/lib/schema";
+
+export function PartnershipsStructuredData({ content }: { content: PartnershipsContent; home?: HomeContent }) {
+  const data = getFaqSchema(content.faq.heading, content.faq.items, content.locale);
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }

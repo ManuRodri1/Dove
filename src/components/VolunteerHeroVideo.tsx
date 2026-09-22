@@ -20,15 +20,7 @@ export default function VolunteerHeroVideo({ content }: { content: VolunteerCont
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-    const activate = () => {
-      if (!motion.matches && !saveData) {
-        setLoaded(true);
-        setPlaying(true);
-      }
-    };
-    if (document.readyState === "complete") activate();
-    else window.addEventListener("load", activate, { once: true });
+
     const preference = () => {
       if (motion.matches) {
         userPaused.current = true;
@@ -38,7 +30,7 @@ export default function VolunteerHeroVideo({ content }: { content: VolunteerCont
     };
     const visibility = () => {
       if (document.hidden) command(frame.current, "pauseVideo");
-      else if (!userPaused.current && !motion.matches) {
+      else if (!userPaused.current && !motion.matches && loaded) {
         setPlaying(true);
         command(frame.current, "playVideo");
       }
@@ -46,11 +38,10 @@ export default function VolunteerHeroVideo({ content }: { content: VolunteerCont
     motion.addEventListener("change", preference);
     document.addEventListener("visibilitychange", visibility);
     return () => {
-      window.removeEventListener("load", activate);
       motion.removeEventListener("change", preference);
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, []);
+  }, [loaded]);
 
   function toggle() {
     if (!loaded) {
@@ -69,7 +60,7 @@ export default function VolunteerHeroVideo({ content }: { content: VolunteerCont
   const embed = `https://www.youtube-nocookie.com/embed/${video.youtubeId}?start=18&autoplay=1&mute=1&loop=1&playlist=${video.youtubeId}&controls=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3`;
   return <section className={`volunteer-hero ${userActivated ? "is-user-activated" : ""}`} aria-labelledby="volunteer-heading">
     <div className="volunteer-hero-media">
-      <Image src={video.poster} alt="" fill sizes="100vw" preload quality={85} />
+      <Image src={video.poster} alt="" fill sizes="100vw" priority quality={85} />
       {loaded && !failed && <iframe ref={frame} className={ready ? "is-ready" : ""} src={embed}
         title={content.hero.videoTitle} allow="autoplay; encrypted-media; picture-in-picture"
         referrerPolicy="strict-origin-when-cross-origin" tabIndex={-1}

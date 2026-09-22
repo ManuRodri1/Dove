@@ -2,8 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { registerMediaUploadAction } from "@/app/admin/media/actions";
-import { getCloudinaryUploadSignature } from "@/lib/cloudinary/client";
+import { getMediaUploadSignatureAction, registerMediaUploadAction } from "@/app/admin/media/actions";
 import type { AdminMediaAsset } from "@/lib/cms/admin-queries";
 
 type CloudinaryResult = {
@@ -114,7 +113,7 @@ export default function MediaPicker({
     setUploading(true);
     setUploadStatus("Preparing secure upload…");
     try {
-      const signature = await getCloudinaryUploadSignature("campaigns");
+      const signature = await getMediaUploadSignatureAction("campaigns");
       if (!signature.success || !signature.data) {
         throw new Error(signature.error ?? "Upload is not configured.");
       }

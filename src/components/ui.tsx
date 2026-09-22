@@ -70,7 +70,7 @@ export function Photo({
         src={media.src}
         alt={media.alt}
         fill
-        preload={preload}
+        priority={preload}
         sizes={sizes}
         style={{ objectPosition: media.position }}
       />

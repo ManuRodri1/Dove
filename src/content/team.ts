@@ -19,7 +19,7 @@ type SourcePerson = {
   sortOrder: number;
 };
 
-const wix = "https://static.wixstatic.com/media/";
+const wix = "https://res.cloudinary.com/vloh9uw1/image/fetch/f_auto,q_auto/https://static.wixstatic.com/media/";
 const image = (path: string, alt: string, position?: string): DoveImage => ({ src: `${wix}${path}`, alt, position });
 const media = {
   hero: { youtubeId: "sfWjNavvpcU", poster: "https://i.ytimg.com/vi/sfWjNavvpcU/maxresdefault.jpg", start: 31 },

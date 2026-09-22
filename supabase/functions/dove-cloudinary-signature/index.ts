@@ -29,7 +29,7 @@ export default {
     if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
     if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
 
-    const userId = context.userClaims?.sub;
+    const userId = context.userClaims?.id;
     if (!userId) return json({ error: "Authentication required." }, 401);
 
     const { data: profile, error: profileError } = await context.supabase

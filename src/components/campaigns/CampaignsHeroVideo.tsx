@@ -39,17 +39,6 @@ export default function CampaignsHeroVideo({
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-
-    const activate = () => {
-      if (!motion.matches && !saveData) {
-        setLoaded(true);
-        setPlaying(true);
-      }
-    };
-
-    if (document.readyState === "complete") activate();
-    else window.addEventListener("load", activate, { once: true });
 
     const preference = () => {
       if (motion.matches) {
@@ -61,7 +50,7 @@ export default function CampaignsHeroVideo({
 
     const visibility = () => {
       if (document.hidden) playerCommand(frame.current, "pauseVideo");
-      else if (!userPaused.current && !motion.matches) {
+      else if (!userPaused.current && !motion.matches && loaded) {
         setPlaying(true);
         playerCommand(frame.current, "playVideo");
       }
@@ -71,11 +60,10 @@ export default function CampaignsHeroVideo({
     document.addEventListener("visibilitychange", visibility);
 
     return () => {
-      window.removeEventListener("load", activate);
       motion.removeEventListener("change", preference);
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, []);
+  }, [loaded]);
 
   function toggle() {
     if (!loaded) {

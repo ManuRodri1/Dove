@@ -27,6 +27,15 @@ export function ContactForm({ locale }: { locale: Locale }) {
     <label>{copy.form.email}<input name="email" type="email" required autoComplete="email" maxLength={254} aria-invalid={invalid("email")} /></label><label>{copy.form.phone}<input name="phone" type="tel" autoComplete="tel" maxLength={40} /></label>
     <label>{copy.form.reason}<select name="reason" defaultValue="general"><option value="general">{copy.form.general}</option><option value="programs">{copy.form.programs}</option><option value="volunteer">{copy.form.volunteer}</option><option value="travel">{copy.form.travel}</option><option value="sponsorship">{copy.form.sponsorship}</option><option value="partnership">{copy.form.partnership}</option><option value="donation">{copy.form.donation}</option><option value="other">{copy.form.other}</option></select></label><label>{copy.form.message}<textarea name="message" rows={6} required maxLength={3000} aria-invalid={invalid("message")} /></label>
     <label className="sr-only" aria-hidden="true">Leave this field blank<input name="honeypot" tabIndex={-1} autoComplete="off" /></label>
+    <p className="form-privacy-notice" style={{ fontSize: "0.85rem", color: "var(--color-text-muted, #666)", margin: "0.5rem 0" }}>
+      {locale === "es"
+        ? "Al enviar este formulario, reconoces que Dove Youth Development utilizará la información provista para responder a tu consulta. Los formularios están destinados a adultos o padres/tutores. "
+        : "By submitting this form, you acknowledge that Dove Youth Development will use the information provided to respond to your inquiry. Forms are intended for adults or parents/guardians. "}
+      <a href={`/${locale}/privacy`} style={{ textDecoration: "underline" }}>
+        {locale === "es" ? "Política de Privacidad" : "Privacy Policy"}
+      </a>
+      .
+    </p>
     <button className="button button--primary" type="submit" disabled={busy}>{busy ? copy.form.busy : copy.form.submit}</button><p className="form-fallback">{copy.form.fallback} <a href={`mailto:${email}`}>{email}</a></p>
     <p id="contact-form-status" role="status" aria-live="polite">{status === "success" ? copy.form.success : status === "invalid" ? copy.form.invalid : status === "error" ? copy.form.error : ""}</p>
   </form>;

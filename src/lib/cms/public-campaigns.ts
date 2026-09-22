@@ -156,9 +156,31 @@ export async function getCampaignBySlug(locale: Locale, slug: string): Promise<P
   } catch { return null; }
 }
 
-export async function getPublicCampaignSlugs(): Promise<Array<{ locale: Locale; slug: string }>> {
-  if (!configured()) return [] as Array<{ locale: Locale; slug: string }>;
+export async function getCampaignTranslations(campaignId: string): Promise<Array<{ locale: Locale; slug: string }>> {
+  if (!configured()) return [];
+  try {
+    const db = (await createClient()) as any;
+    const { data } = await db.from("campaign_translations")
+      .select("locale,slug")
+      .eq("campaign_id", campaignId)
+      .eq("publication_status", "published");
+    return (data ?? []).map((t: Raw) => ({ locale: t.locale as Locale, slug: t.slug }));
+  } catch {
+    return [];
+  }
+}
+
+export async function getPublicCampaignSlugs(): Promise<Array<{ locale: Locale; slug: string; lastModified?: string }>> {
+  if (!configured()) return [] as Array<{ locale: Locale; slug: string; lastModified?: string }>;
   const db = (await createClient()) as any;
-  const { data, error } = await db.from("campaign_translations").select("locale,slug,campaign:campaigns!inner(status,published_at,scheduled_at)").eq("publication_status", "published").eq("campaign.status", "published").lte("campaign.published_at", new Date().toISOString());
-  return error ? [] : (data ?? []).map((item: Raw) => ({ locale: item.locale as Locale, slug: item.slug as string }));
+  const { data, error } = await db.from("campaign_translations")
+    .select("locale,slug,updated_at,campaign:campaigns!inner(status,published_at,scheduled_at,updated_at)")
+    .eq("publication_status", "published")
+    .eq("campaign.status", "published")
+    .lte("campaign.published_at", new Date().toISOString());
+  return error ? [] : (data ?? []).map((item: Raw) => ({
+    locale: item.locale as Locale,
+    slug: item.slug as string,
+    lastModified: item.updated_at || item.campaign?.updated_at || item.campaign?.published_at || undefined,
+  }));
 }

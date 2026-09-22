@@ -20,15 +20,6 @@ export default function DonateHeroVideo({ content }: { content: DonateContent })
 
   useEffect(() => {
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-    const activate = () => {
-      if (!motion.matches && !saveData) {
-        setLoaded(true);
-        setPlaying(true);
-      }
-    };
-    if (document.readyState === "complete") activate();
-    else window.addEventListener("load", activate, { once: true });
 
     const preference = () => {
       if (motion.matches) {
@@ -39,7 +30,7 @@ export default function DonateHeroVideo({ content }: { content: DonateContent })
     };
     const visibility = () => {
       if (document.hidden) playerCommand(frame.current, "pauseVideo");
-      else if (!userPaused.current && !motion.matches) {
+      else if (!userPaused.current && !motion.matches && loaded) {
         setPlaying(true);
         playerCommand(frame.current, "playVideo");
       }
@@ -47,11 +38,10 @@ export default function DonateHeroVideo({ content }: { content: DonateContent })
     motion.addEventListener("change", preference);
     document.addEventListener("visibilitychange", visibility);
     return () => {
-      window.removeEventListener("load", activate);
       motion.removeEventListener("change", preference);
       document.removeEventListener("visibilitychange", visibility);
     };
-  }, []);
+  }, [loaded]);
 
   function toggle() {
     if (!loaded) {
@@ -77,7 +67,7 @@ export default function DonateHeroVideo({ content }: { content: DonateContent })
   return (
     <section className={`donate-hero ${userActivated ? "is-user-activated" : ""}`} aria-labelledby="donate-heading">
       <div className="donate-hero-media">
-        <Image src={content.video.poster} alt="" fill sizes="100vw" preload quality={85} />
+        <Image src={content.video.poster} alt="" fill sizes="100vw" priority quality={85} />
         {loaded && !failed && <iframe
           ref={frame}
           className={ready ? "is-ready" : ""}

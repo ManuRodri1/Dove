@@ -104,6 +104,15 @@ export default function VolunteerApplicationForm({ content }: { content: Volunte
         aria-describedby={errors.acceptedRelease ? "acceptedRelease-error" : undefined} /><span>{copy.acceptance}</span></label>
       {message("acceptedRelease")}
     </div>
+    <p className="form-privacy-notice" style={{ fontSize: "0.85rem", color: "var(--color-text-muted, #666)", margin: "0.5rem 0" }}>
+      {content.locale === "es"
+        ? "Al enviar esta solicitud, reconoces que Dove Youth Development utilizará la información provista para evaluar y coordinar el voluntariado. Las solicitudes están destinadas a adultos. "
+        : "By submitting this application, you acknowledge that Dove Youth Development will use your information to evaluate and coordinate volunteer participation. Applications are intended for adults. "}
+      <a href={`/${content.locale}/privacy`} style={{ textDecoration: "underline" }}>
+        {content.locale === "es" ? "Política de Privacidad" : "Privacy Policy"}
+      </a>
+      .
+    </p>
     <div className="volunteer-submit-row">
       <button className="button button--primary" type="submit" disabled={busy}>{busy ? copy.busy : copy.submit}</button>
       <a className="text-link" href={content.contactLink.href}>{content.contactLink.label}<span aria-hidden="true">→</span></a>

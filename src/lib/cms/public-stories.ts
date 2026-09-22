@@ -241,15 +241,34 @@ export async function getStoryCategories(locale: Locale) {
   }
 }
 
-export async function getPublicStorySlugs() {
+export async function getStoryTranslations(storyId: string): Promise<Array<{ locale: Locale; slug: string }>> {
   if (!configured()) return [];
   try {
     const db = await createClient();
-    const { data } = await db.from("story_translations").select("slug,locale,publication_status,story:stories!inner(status,published_at)")
+    const { data } = await db.from("story_translations")
+      .select("locale,slug")
+      .eq("story_id", storyId)
+      .eq("publication_status", "published");
+    return (data ?? []).map((t) => ({ locale: t.locale as Locale, slug: t.slug }));
+  } catch {
+    return [];
+  }
+}
+
+export async function getPublicStorySlugs(): Promise<Array<{ slug: string; locale: Locale; lastModified?: string }>> {
+  if (!configured()) return [];
+  try {
+    const db = await createClient();
+    const { data } = await db.from("story_translations")
+      .select("slug,locale,updated_at,publication_status,story:stories!inner(status,published_at,updated_at)")
       .eq("publication_status", "published")
       .eq("story.status", "published")
       .lte("story.published_at", new Date().toISOString());
-    return (data ?? []).map((item) => ({ slug: item.slug, locale: item.locale as Locale }));
+    return (data ?? []).map((item: any) => ({
+      slug: item.slug as string,
+      locale: item.locale as Locale,
+      lastModified: item.updated_at || item.story?.updated_at || item.story?.published_at || undefined,
+    }));
   } catch {
     return [];
   }

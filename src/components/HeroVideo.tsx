@@ -74,7 +74,7 @@ export default function HeroVideo({ home }: { home: HomeContent }) {
           alt=""
           fill
           sizes="100vw"
-          preload
+          priority
           quality={85}
         />
         <video

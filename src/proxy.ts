@@ -6,8 +6,8 @@ export function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
   const segment = url.pathname.split("/")[1];
 
-  // Bypass admin and api routes from locale rewriting
-  if (segment === "admin" || segment === "api") {
+  // Bypass admin, api, and post routes from locale rewriting
+  if (segment === "admin" || segment === "api" || segment === "post") {
     return NextResponse.next();
   }
 
@@ -40,4 +40,32 @@ export function proxy(request: NextRequest) {
   return NextResponse.next({ request: { headers } });
 }
 
-export const config = { matcher: ["/", "/our-story", "/partnerships", "/dove-board", "/the-dove-experience", "/volunteer-release", "/grouptravel", "/en/:path*", "/es/:path*"] };
+export const config = {
+  matcher: [
+    "/",
+    "/our-story",
+    "/our-team",
+    "/what-we-do",
+    "/child-sponsorship",
+    "/vocational-training-center",
+    "/volunteer",
+    "/travel-with-purpose",
+    "/partnerships",
+    "/our-impact",
+    "/stories",
+    "/stories/:path*",
+    "/campaigns",
+    "/campaigns/:path*",
+    "/donate",
+    "/contact",
+    "/privacy",
+    "/terms",
+    "/dove-board",
+    "/the-dove-experience",
+    "/volunteer-release",
+    "/grouptravel",
+    "/post/:path*",
+    "/en/:path*",
+    "/es/:path*",
+  ],
+};

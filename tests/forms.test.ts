@@ -51,7 +51,7 @@ test("honeypot submissions are retained as spam and never delivered", async () =
 });
 
 test("migration keeps submissions private while permitting only admins to inspect", () => {
-  const sql = readFileSync("supabase/migrations/20260921000000_create_dove_form_submissions.sql", "utf8");
+  const sql = readFileSync("supabase/migrations/20260922142632_create_dove_form_submissions.sql", "utf8");
   assert.match(sql, /ENABLE ROW LEVEL SECURITY/);
   assert.match(sql, /REVOKE ALL ON TABLE dove\.form_submissions FROM anon, authenticated/);
   assert.match(sql, /GRANT ALL ON TABLE dove\.form_submissions TO service_role/);

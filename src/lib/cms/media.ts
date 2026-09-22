@@ -6,6 +6,7 @@ import { getStaffSession } from "./admin-stories";
 
 export const CLOUDINARY_DOVE_NAMESPACE = "dove-youth-development";
 export const APPROVED_MEDIA_FOLDERS = [
+  "campaigns",
   "stories",
   "news",
   "covers",

@@ -4,11 +4,13 @@ import Footer from "@/components/Footer";
 import Newsletter from "@/components/Newsletter";
 import StoryArchive from "@/components/stories/StoryArchive";
 import StoriesSupportCTA from "@/components/stories/StoriesSupportCTA";
+import { JsonLd } from "@/components/StructuredData";
 import { getHome } from "@/content/home";
 import { getStoriesCopy } from "@/content/stories-ui";
 import { isLocale } from "@/i18n/config";
 import { localizedMetadata } from "@/lib/seo";
 import { getFeaturedStories, getStories } from "@/lib/cms/public-stories";
+import { getBreadcrumbSchema } from "@/lib/schema";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -49,7 +51,14 @@ export default async function StoriesPage({ params, searchParams }: Props) {
   }
 
   const home = getHome(locale);
+  const copy = getStoriesCopy(locale);
+  const breadcrumbs = getBreadcrumbSchema([
+    { name: home.ui.home, url: `/${locale}` },
+    { name: copy.index.title, url: `/${locale}/stories` },
+  ]);
+
   return <>
+    <JsonLd data={breadcrumbs} />
     <Header home={home} activeHref={`/${locale}/stories`} />
     <main id="main" tabIndex={-1}>
       <StoryArchive locale={locale} items={items} lead={page === 1 ? lead : null} total={total} page={page} pageSize={pageSize} query={query} />
@@ -59,4 +68,3 @@ export default async function StoriesPage({ params, searchParams }: Props) {
     <Footer home={home} />
   </>;
 }
-

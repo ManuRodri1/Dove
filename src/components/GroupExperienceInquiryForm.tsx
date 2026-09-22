@@ -140,6 +140,16 @@ export default function GroupExperienceInquiryForm({ content }: { content: Trave
       <p>{copy.logisticsNote}</p>
     </fieldset>
 
+    <p className="form-privacy-notice" style={{ fontSize: "0.85rem", color: "var(--color-text-muted, #666)", margin: "0.5rem 0" }}>
+      {content.locale === "es"
+        ? "Al enviar esta consulta, reconoces que Dove Youth Development utilizará tu información para coordinar opciones de viaje grupal. Las consultas deben ser enviadas por un organizador o coordinador adulto. "
+        : "By submitting this inquiry, you acknowledge that Dove Youth Development will use your information to coordinate group travel options. Inquiries must be submitted by an adult group organizer or coordinator. "}
+      <a href={`/${content.locale}/privacy`} style={{ textDecoration: "underline" }}>
+        {content.locale === "es" ? "Política de Privacidad" : "Privacy Policy"}
+      </a>
+      .
+    </p>
+
     <div className="group-submit-row">
       <button className="button button--primary" type="submit" disabled={busy}>{busy ? copy.busy : copy.submit}</button>
       <a className="text-link" href={content.inquiryContact.href}>{content.inquiryContact.label}<span aria-hidden="true">→</span></a>

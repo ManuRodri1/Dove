@@ -128,6 +128,16 @@ export default function PartnershipInquiryForm({ content }: { content: Partnersh
       </div>
     </fieldset>
 
+    <p className="form-privacy-notice" style={{ fontSize: "0.85rem", color: "var(--color-text-muted, #666)", margin: "0.5rem 0" }}>
+      {content.locale === "es"
+        ? "Al enviar esta consulta, reconoces que Dove Youth Development utilizará la información provista para responder sobre oportunidades de alianza institucional. "
+        : "By submitting this inquiry, you acknowledge that Dove Youth Development will use your information to respond regarding partnership opportunities. "}
+      <a href={`/${content.locale}/privacy`} style={{ textDecoration: "underline" }}>
+        {content.locale === "es" ? "Política de Privacidad" : "Privacy Policy"}
+      </a>
+      .
+    </p>
+
     <div className="partner-submit-row">
       <button className="button button--primary" type="submit" disabled={busy}>{busy ? copy.busy : copy.submit}</button>
       <a className="text-link" href={content.inquiryContact.href}>{content.inquiryContact.label}<span aria-hidden="true">→</span></a>
