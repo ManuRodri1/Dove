@@ -10,7 +10,7 @@ const videoId = "v1789135765/entrega_utiles_DOVE_OF";
 export const doveMedia = {
   logo: {
     main: {
-      src: `${wix}294108_5540425cbe8648ff94b4acce95758bf1~mv2.png`,
+      src: "https://res.cloudinary.com/vloh9uw1/image/upload/v1790108305/PSD_Dove_Logo_White_backround-removebg-preview.png",
       alt: "Dove Youth Development",
     },
     alternative: {

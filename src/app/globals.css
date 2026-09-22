@@ -483,7 +483,10 @@ button:active {
   isolation: isolate;
   color: var(--color-white);
   background: var(--color-teal);
-  padding-block: var(--space-xl) var(--space-3xl);
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(4rem, 8vw, 7rem);
 }
 .hero-media,
 .hero-media::after {
@@ -496,7 +499,7 @@ button:active {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 62% center;
+  object-position: 68% center;
 }
 .hero-media video {
   position: absolute;
@@ -508,13 +511,15 @@ button:active {
   background:
     linear-gradient(
       90deg,
-      var(--color-hero-overlay-start),
-      var(--color-hero-overlay-end)
+      rgba(0, 52, 48, 0.94) 0%,
+      rgba(0, 52, 48, 0.82) 36%,
+      rgba(0, 52, 48, 0.34) 72%,
+      rgba(0, 52, 48, 0.16) 100%
     ),
     linear-gradient(
       0deg,
-      var(--color-hero-overlay-bottom),
-      var(--color-transparent)
+      rgba(0, 52, 48, 0.38),
+      transparent 42%
     );
 }
 .hero-media .video-failed {
@@ -545,10 +550,17 @@ button:active {
 }
 .hero h1 {
   color: inherit;
-  max-width: 11.8em;
+  max-width: 12ch;
+  font-size: clamp(2.7rem, 5vw, 4.75rem);
+  line-height: 0.99;
+  text-wrap: balance;
+}
+.hero-content {
+  width: 100%;
+  max-width: 74rem;
 }
 .hero-description {
-  max-width: 36rem;
+  max-width: 35rem;
   font-size: var(--text-lg);
   line-height: 1.5;
   color: var(--color-light-muted);
@@ -1162,7 +1174,7 @@ button:active {
     width: 258px;
   }
   .hero {
-    padding-block: var(--space-3xl) var(--space-4xl);
+    padding-block: clamp(4rem, 8vw, 7rem);
   }
   .hero-description {
     font-size: var(--text-lg);
@@ -1240,14 +1252,11 @@ button:active {
 }
 @media (min-width: 64rem) {
   .hero {
-    padding-block: var(--space-3xl) var(--space-5xl);
-    min-height: 660px;
-    display: flex;
-    align-items: center;
+    min-height: 680px;
   }
   .hero-media img,
   .hero-media video {
-    object-position: center;
+    object-position: 68% center;
   }
 }
 
